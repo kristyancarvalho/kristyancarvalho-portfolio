@@ -1,5 +1,4 @@
 import { motion, useInView } from "framer-motion";
-import { Footer } from "@/components/footer";
 import { TechCarousel } from "@/components/TechCarousel";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -325,7 +324,6 @@ export function AboutPage({ theme }: AboutPageProps) {
                     <TechCarousel theme={theme} />
                 </motion.div>
             </main>
-            <Footer theme={theme} />
         </div>
     )
 }

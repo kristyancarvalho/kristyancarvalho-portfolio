@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { getPost, Post } from '../../firebase/firestore';
 import { Skeleton } from '@/components/Skeleton';
 import Breadcrumbs from '../../components/PostBreadcrumb';
-import { Footer } from '@/components/footer';
 import { Helmet } from 'react-helmet';
 
 interface PostPageProps {
@@ -82,7 +81,6 @@ export function PostPage({ theme }: PostPageProps) {
                     </main>
                 </div>
             </div>
-            <Footer theme={theme} />
         </div>
     );
 }

@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from "framer-motion";
-import { Footer } from "@/components/footer";
 import SearchBar from "@/components/SearchBar";
 import { Skeleton } from "@/components/Skeleton";
 import { getPosts, Post } from "@/firebase/firestore";
@@ -143,7 +142,6 @@ export function PostsPage({ theme }: PostsPageProps) {
                     </motion.div>
                 </div>
             </main>
-            <Footer theme={theme} />
         </div>
     );
 }

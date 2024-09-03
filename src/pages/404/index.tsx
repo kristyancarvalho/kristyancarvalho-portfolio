@@ -1,4 +1,3 @@
-import { Footer } from "@/components/footer";
 import { motion } from "framer-motion";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
@@ -32,7 +31,6 @@ export function NotFound({ theme }: NotFoundProps) {
                     </span>
                     <Link to="/" className="text-lgg text-violet-500 hover:underline">Retornar para o início</Link>
                 </div>
-                <Footer theme={theme}/>
             </main>
         </div>
     );

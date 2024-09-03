@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { motion } from "framer-motion";
-import { Footer } from "@/components/footer";
 import { Download } from 'lucide-react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -101,7 +100,6 @@ export function HomePage({ theme }: HomePageProps) {
                     </motion.div>
                 </motion.div>
             </main>
-            <Footer theme={theme} />
         </div>
     )
 }

@@ -1,5 +1,4 @@
 import { motion, useInView } from "framer-motion";
-import { Footer } from "@/components/footer";
 import { Chrome, Monitor, Smartphone, SquareTerminalIcon} from "lucide-react";
 import { ProjectCard } from "../../components/projectsCard";
 import { useRef } from "react";
@@ -123,7 +122,6 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
                     </motion.div>
                 </div>
             </main>
-            <Footer theme={theme} />
         </div>
     )
 }
