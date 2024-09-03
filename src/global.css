@@ -110,8 +110,8 @@
 
 .post-content blockquote {
   @apply border-l-4 pl-4 italic my-4;
-  @apply dark:border-gray-600 border-gray-300;
-  @apply dark:bg-gray-800 bg-gray-100;
+  @apply dark:border-neutral-600 border-neutral-300;
+  @apply dark:bg-neutral-800 bg-neutral-100;
   @apply py-2 px-4 rounded;
 }
 
@@ -126,15 +126,15 @@
 
 .post-content pre {
   @apply whitespace-pre-wrap break-words overflow-x-auto;
-  @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg my-4;
+  @apply bg-neutral-100 dark:bg-neutral-800 p-4 rounded-lg my-4;
 }
 
 .post-content code {
   @apply font-mono text-sm;
-  @apply dark:text-pink-300 text-pink-600;
+  @apply dark:text-violet-500 text-violet-600;
 }
 
 .post-content p code {
-  @apply dark:bg-gray-700 bg-gray-200;
+  @apply dark:bg-neutral-700 bg-neutral-200;
   @apply px-2 py-1 rounded;
 }

@@ -37,7 +37,7 @@ export function PostsPage({ theme }: PostsPageProps) {
         post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         post.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
+    
     const PostSkeleton = () => (
         <div className={`${theme === 'dark' ? 'bg-neutral-900' : 'bg-white'} rounded-lg overflow-hidden shadow-md`}>
             <Skeleton className="w-full h-48" />
@@ -81,9 +81,9 @@ export function PostsPage({ theme }: PostsPageProps) {
     };
 
     return (
-        <div className={`overflow-x-hidden transition-colors duration-300 ease-in-out ${theme === 'dark' ? 'bg-zinc-950 text-white' : 'bg-zinc-200/50 text-black'}`}>
-            <main className="container w-full lg:py-32 min-[320px]:py-24 px-4 lg:px-36">
-                <motion.span 
+        <div className={`transition-colors duration-300 ease-in-out ${theme === 'dark' ? 'bg-zinc-950' : 'bg-zinc-200/50'} min-h-screen flex flex-col`}>
+            <main className={`container mx-auto px-4 pb-8 pt-28 flex-grow`}>
+            <motion.span 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ type: "just", duration: 0.5 }}
@@ -107,6 +107,7 @@ export function PostsPage({ theme }: PostsPageProps) {
                         animate={isInView ? "visible" : "hidden"}
                         className="grid grid-cols-1 min-[320px]:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
                     >
+                        
                         {loading ? (
                             [...Array(6)].map((_, index) => (
                                 <motion.div key={index} variants={itemVariants}>
@@ -130,8 +131,8 @@ export function PostsPage({ theme }: PostsPageProps) {
                                                 <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} mb-2 line-clamp-2`}>{post.description}</p>
                                                 <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm mb-4`}>
                                                     {formatDate(post.createdAt instanceof Date 
-                                                        ? post.createdAt 
-                                                        : new Date(post.createdAt))}
+                                                    ? post.createdAt 
+                                                    : new Date(post.createdAt))}
                                                 </p>
                                             </div>
                                         </div>

@@ -110,7 +110,7 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
                         variants={containerVariants}
                         initial="hidden"
                         animate={isInView ? "visible" : "hidden"}
-                        className="grid grid-cols-1 min-[320px]:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+                        className="grid grid-cols-1 min-[320px]:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
                     >
                         {projects.map((project, index) => (
                             <motion.div
