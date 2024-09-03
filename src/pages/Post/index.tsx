@@ -61,7 +61,7 @@ export function PostPage({ theme }: PostPageProps) {
             )}
             <div className="container mx-auto my-4 md:my-12  md:py-8 min-[320px]:my-16">
                 <div className="min-h-screen flex items-center justify-center lg:p-4 md:p-8">
-                    <main className={`w-full h-full ${theme === 'dark' ? 'bg-black' : 'bg-white'} rounded-lg shadow-lg px-4 md:px-8 lg:px-16 py-4 md:py-8 overflow-auto`}>
+                    <main className={`w-full h-full ${theme === 'dark' ? 'bg-black' : 'bg-white'} rounded-lg shadow-lg md:px-8 lg:px-16 py-4 md:py-8 overflow-auto`}>
                         <Breadcrumbs items={breadcrumbItems} theme={theme} />
                         {loading ? (
                             <PostSkeleton />
