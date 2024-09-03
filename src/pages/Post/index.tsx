@@ -4,6 +4,7 @@ import { getPost, Post } from '../../firebase/firestore';
 import { Skeleton } from '@/components/Skeleton';
 import Breadcrumbs from '../../components/PostBreadcrumb';
 import { Footer } from '@/components/footer';
+import { Helmet } from 'react-helmet';
 
 interface PostPageProps {
     theme: 'light' | 'dark';
@@ -47,6 +48,18 @@ export function PostPage({ theme }: PostPageProps) {
 
     return (
         <div className={`min-h-screen ${theme === 'dark' ? 'bg-zinc-950 text-white' : 'bg-zinc-200/50 text-black'}`}>
+            {post && (
+                <Helmet>
+                    <title>{post.title}</title>
+                    <meta name="description" content={post.description} />
+                    <meta property="og:title" content={post.title} />
+                    <meta property="og:description" content={post.description} />
+                    <meta property="og:image" content={post.coverImage} />
+                    <meta property="og:url" content={`https://kristyancarvalho.vercel.app/post/${post.id}`} />
+                    <meta property="og:type" content="article" />
+                    <link rel="canonical" href={`https://kristyancarvalho.vercel.app/post/${post.id}`} />
+                </Helmet>
+            )}
             <div className="container mx-auto my-4 md:my-12 px-4 py-4 md:py-8 min-[320px]:my-16">
                 <div className="min-h-screen flex items-center justify-center lg:p-4 md:p-8">
                     <main className={`w-full h-full ${theme === 'dark' ? 'bg-black' : 'bg-white'} rounded-lg shadow-lg px-4 md:px-8 lg:px-16 py-4 md:py-8 overflow-auto`}>
