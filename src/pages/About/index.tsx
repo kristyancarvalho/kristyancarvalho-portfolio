@@ -2,9 +2,9 @@ import { motion, useInView } from "framer-motion";
 import { TechCarousel } from "@/components/TechCarousel";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import Breadcrumbs from "@/components/Breadcrumb";
 
 interface AboutPageProps {
     theme: 'light' | 'dark';
@@ -28,14 +28,6 @@ export function AboutPage({ theme }: AboutPageProps) {
         }
     }, [location]);
 
-    const scrollToTechnologies = (e: React.MouseEvent) => {
-        e.preventDefault();
-        const element = document.getElementById('technologies');
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
     useEffect(() => {
         if (location.hash === '#about') {
             const element = document.getElementById('about');
@@ -45,70 +37,48 @@ export function AboutPage({ theme }: AboutPageProps) {
         }
     }, [location]);
 
-    const scrollToAbout = (e: React.MouseEvent) => {
-        e.preventDefault();
-        const element = document.getElementById('about');
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
+
+    const breadcrumbItems = [
+        { label: 'Sobre mim', href: '#about' },
+        { label: 'Tecnologias', href: '#technologies' },
+    ];
 
     return (
         <div className={`overflow-x-hidden transition-colors duration-300 ease-in-out ${theme === 'dark' ? 'bg-zinc-950' : 'bg-zinc-200/50'}`}>
             <main className="container flex w-screen lg:py-28 min-[320px]:py-24 flex-col gap-8 lg:px-36">
-                <Breadcrumb>
-                    <BreadcrumbList className={`flex items-center p-2 border-b ${theme === 'dark' ? 'border-neutral-800' : 'border-zinc-200/50'}`}>
-                        <BreadcrumbItem>
-                            <code>
-                                <Link 
-                                    to="/about" 
-                                    className={`font-semibold hover:underline lg:text-lg transition-colors duration-300 ${
-                                        theme === 'dark' 
-                                            ? 'text-violet-500 hover:text-violet-400' 
-                                            : 'text-violet-600 hover:text-violet-700'
-                                    }`} 
-                                    onClick={scrollToAbout}
-                                >
-                                    Sobre mim
-                                </Link>
-                            </code>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator>
-                            <span className={`mx-2 text-lg font-bold ${
-                                theme === 'dark' ? 'text-neutral-800' : 'text-zinc-200'
-                            }`}>|</span>
-                        </BreadcrumbSeparator>
-                        <BreadcrumbItem>
-                            <code>
-                                <Link 
-                                    className={`font-semibold hover:underline lg:text-lg transition-colors duration-300 ${
-                                        theme === 'dark' 
-                                            ? 'text-violet-500 hover:text-violet-400' 
-                                            : 'text-violet-600 hover:text-violet-700'
-                                    }`} 
-                                    to="/about#technologies" 
-                                    onClick={scrollToTechnologies}
-                                >
-                                    Tecnologias
-                                </Link>
-                            </code>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb>
+                <div className="lg:-mb-12 lg:mt-8 min-[320px]:-mb-8">
+                    <Breadcrumbs items={breadcrumbItems} theme={theme} />
+                </div>
 
                 <div className="flex flex-col">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.5 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5 }}
-                        className="flex justify-center items-center"
+                        transition={{                             
+                            type: "spring", 
+                            stiffness: 200, 
+                            damping: 30,
+                            delay: 0.1
+                        }}
+                        className="flex justify-center items-center w-full bg-violet-500/50 rounded-lg mb-8"
                     >
-                        <LazyLoadImage
-                            src="/laptop.png"
-                            effect="blur"
-                            alt="laptop"
-                            className="mt-4 max-h-screen-sm max-w-screen-sm lg:max-h-64 min-[320px]:max-h-56"
-                        />
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{                             
+                                type: "spring", 
+                                stiffness: 200,
+                                delay: 0.3,
+                                duration: 0.3,
+                            }}
+                        >
+                            <LazyLoadImage
+                                src="/laptop.png"
+                                effect="blur"
+                                alt="laptop"
+                                className="max-h-screen-sm max-w-screen-sm lg:max-h-64 min-[320px]:max-h-56"
+                            />
+                        </motion.div>
                     </motion.div>
                     <motion.div
                         ref={aboutRef}

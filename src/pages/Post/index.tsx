@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPost, Post } from '../../firebase/firestore';
+import { getPost, Post } from '@/firebase/firestore';
 import { Skeleton } from '@/components/Skeleton';
-import Breadcrumbs from '../../components/PostBreadcrumb';
+import Breadcrumbs from '@/components/Breadcrumb';
 import { Helmet } from 'react-helmet';
 
 interface PostPageProps {
