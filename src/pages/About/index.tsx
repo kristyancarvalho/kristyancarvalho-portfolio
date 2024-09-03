@@ -6,7 +6,6 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { Helmet } from "react-helmet";
 
 interface AboutPageProps {
     theme: 'light' | 'dark';
@@ -57,25 +56,6 @@ export function AboutPage({ theme }: AboutPageProps) {
 
     return (
         <div className={`overflow-x-hidden transition-colors duration-300 ease-in-out ${theme === 'dark' ? 'bg-zinc-950' : 'bg-zinc-200/50'}`}>
-            <Helmet>
-                <meta property="og:title" content="Kristyan Carvalho | Desenvolvedor Full-Stack" />
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content="https://kristyancarvalho.vercel.app" />
-                <meta property="og:image" content="https://kristyancarvalho.vercel.app/metadata_image.svg" />
-                <meta property="og:description" content="Explore o portfólio de Kristyan Carvalho, Desenvolvedor Full-Stack especializado em tecnologias modernas como TypeScript, React, e Node.js. Descubra seus projetos e habilidades." />
-                <meta property="og:locale" content="pt_BR" />
-
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="Kristyan Carvalho | Desenvolvedor Full-Stack" />
-                <meta name="twitter:description" content="Portfólio de Kristyan Carvalho, Desenvolvedor Full-Stack especializado em TypeScript, React, Node.js e mais." />
-                <meta name="twitter:image" content="https://kristyancarvalho.vercel.app/metadata_image.svg" />
-                <meta name="twitter:image:alt" content="Portfólio de Kristyan Carvalho" />
-
-                <meta name="description" content="Portfólio de Kristyan Carvalho, Desenvolvedor Full-Stack especializado em TypeScript, React, Node.js e mais." />
-                <meta name="keywords" content="Kristyan Carvalho, Desenvolvedor, Desenvolvedor Full-Stack, TypeScript, React, Node.js, portfólio" />
-                <meta name="author" content="Kristyan Carvalho" />
-                <meta name="robots" content="index, follow" />
-            </Helmet>
             <main className="container flex w-screen lg:py-28 min-[320px]:py-24 flex-col gap-8 lg:px-36">
                 <Breadcrumb>
                     <BreadcrumbList className={`flex items-center p-2 border-b ${theme === 'dark' ? 'border-neutral-800' : 'border-zinc-200/50'}`}>
