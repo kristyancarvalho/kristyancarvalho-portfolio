@@ -100,7 +100,7 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
                     transition={{ type: "just", duration: 0.5 }}
                     className="flex"
                 >
-                    <code className={`text-3xl px-2 py-1 mb-4 ${theme === 'dark' ? 'text-neutral-500 bg-neutral-800/50' : 'text-neutral-500 bg-neutral-800/20'} rounded-sm overflow-hidden`}>
+                    <code className={`text-3xl px-2 py-1 mb-8 ${theme === 'dark' ? 'text-neutral-500 bg-neutral-800/50' : 'text-neutral-600 bg-neutral-300/50'} rounded-sm overflow-hidden`}>
                         /projetos
                     </code>
                 </motion.span>

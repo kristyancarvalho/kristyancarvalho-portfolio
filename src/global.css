@@ -83,3 +83,58 @@
   background: #252525;
   border-radius: 5px;
 }
+
+.post-content {
+  @apply text-base leading-relaxed;
+}
+
+.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
+  @apply font-bold mb-4 mt-6;
+}
+
+.post-content h1 { @apply text-3xl; }
+.post-content h2 { @apply text-2xl; }
+.post-content h3 { @apply text-xl; }
+.post-content h4 { @apply text-lg; }
+
+.post-content p {
+  @apply mb-4;
+}
+
+.post-content ul, .post-content ol {
+  @apply mb-4 pl-6;
+}
+
+.post-content ul { @apply list-disc; }
+.post-content ol { @apply list-decimal; }
+
+.post-content blockquote {
+  @apply border-l-4 pl-4 italic my-4;
+  @apply dark:border-gray-600 border-gray-300;
+  @apply dark:bg-gray-800 bg-gray-100;
+  @apply py-2 px-4 rounded;
+}
+
+.post-content a {
+  @apply text-blue-600 dark:text-blue-400 underline;
+  @apply hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200;
+}
+
+.post-content img {
+  @apply max-w-full h-auto my-4 rounded-lg;
+}
+
+.post-content pre {
+  @apply whitespace-pre-wrap break-words overflow-x-auto;
+  @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg my-4;
+}
+
+.post-content code {
+  @apply font-mono text-sm;
+  @apply dark:text-pink-300 text-pink-600;
+}
+
+.post-content p code {
+  @apply dark:bg-gray-700 bg-gray-200;
+  @apply px-2 py-1 rounded;
+}

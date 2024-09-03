@@ -5,6 +5,8 @@ import { ProjectsPage } from "./pages/Projects";
 import { AboutPage } from "./pages/About";
 import { NotFound } from "./pages/404";
 import { NavigationBar } from "./components/navigation";
+import { PostsPage } from './pages/Posts';
+import { PostPage } from './pages/Post';
 
 export function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -56,6 +58,8 @@ export function App() {
           <Route path="/" element={<HomePage theme={theme} />} />
           <Route path="/projects" element={<ProjectsPage theme={theme} />} />
           <Route path="/about" element={<AboutPage theme={theme} />} />
+          <Route path="/posts" element={<PostsPage theme={theme} />} />
+          <Route path="/post/:id" element={<PostPage theme={theme} />} />
           <Route path="*" element={<NotFound theme={theme} />} />
         </Routes>
       </div>

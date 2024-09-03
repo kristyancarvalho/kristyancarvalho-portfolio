@@ -11,7 +11,8 @@ import { motion, useScroll } from 'framer-motion';
 const navigationArray = [
   { title: '/inicio', link: '/' },
   { title: '/sobre', link: '/about' },
-  { title: '/projetos', link: '/projects' }
+  { title: '/projetos', link: '/projects' },
+  { title: '/posts', link: '/posts' }
 ];
 
 interface NavigationBarProps {
@@ -66,7 +67,7 @@ export function NavigationBar({ theme, toggleTheme }: NavigationBarProps) {
               to={link}
               ref={(el) => (tabRefs.current[index] = el)}
               className={`relative inline-block ${
-                pathname === link
+                (pathname === link || (link === '/posts' && pathname.startsWith('/post/')))
                   ? 'text-violet-500 font-extrabold'
                   : theme === 'dark' 
                     ? 'text-gray-200/80 hover:text-white' 
@@ -120,10 +121,10 @@ export function NavigationBar({ theme, toggleTheme }: NavigationBarProps) {
                   <Link key={link} to={link} onClick={handleLinkClick}>
                     <code
                       className={`${
-                        pathname === link
+                        (pathname === link || (link === '/posts' && pathname.startsWith('/post/')))
                           ? 'text-violet-500 font-extrabold'
-                          : theme === 'dark'
-                            ? 'text-gray-200/80 hover:text-white'
+                          : theme === 'dark' 
+                            ? 'text-gray-200/80 hover:text-white' 
                             : 'text-zinc-900 hover:text-black'
                       } text-3xl py-5 px-3 hover: transition duration-300 ease-in-out`}
                     >

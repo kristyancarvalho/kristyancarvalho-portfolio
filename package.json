@@ -13,9 +13,11 @@
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/react-lazy-load-image-component": "^1.6.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "firebase": "^10.13.1",
     "framer-motion": "^11.3.18",
     "lucide-react": "^0.416.0",
     "package": "^1.0.1",
@@ -29,6 +31,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^20.14.12",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

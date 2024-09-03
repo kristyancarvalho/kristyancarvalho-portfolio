@@ -15,7 +15,7 @@ interface ProjectCardProps {
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ theme, title, description, imageSrc, githubLink, platforms }) => {
     return (
-        <div className={`w-full h-full rounded-md ${theme === 'dark' ? 'bg-neutral-800/50' : 'bg-black/5'} flex flex-col`}>
+        <div className={`w-full h-full rounded-md ${theme === 'dark' ? 'bg-neutral-800/50' : 'bg-white'} flex flex-col`}>
             <LazyLoadImage
                 src={imageSrc}
                 effect="blur"
