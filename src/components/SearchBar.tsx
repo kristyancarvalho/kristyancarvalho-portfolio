@@ -9,20 +9,26 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm, placeholder = "Pesquisar...", theme }) => {
   return (
-    <div className="mb-6 flex">
+    <div
+      className={`mb-6 flex flex-grow p-2 rounded-xl gap-2 ${
+        theme === 'dark' 
+          ? 'bg-neutral-900 text-white' 
+          : 'bg-white text-black border border-gray-300'
+      }`}
+    >
       <input
         type="text"
         placeholder={placeholder}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className={`flex-grow p-4 rounded-l ${
+        className={`flex flex-grow p-2 ${
           theme === 'dark' 
             ? 'bg-neutral-900 text-white' 
-            : 'bg-white text-black border border-gray-300'
+            : 'bg-white text-black border-none'
         }`}
       />
       <button 
-        className="bg-violet-500 text-white px-6 rounded-r hover:bg-violet-600 transition duration-300"
+        className="bg-violet-500 text-white px-6 py-4 rounded-lg hover:bg-violet-600 transition duration-300"
       >
         <Search size={20} />
       </button>
