@@ -21,7 +21,8 @@ export function PostsPage({ theme }: PostsPageProps) {
             setLoading(true);
             try {
                 const fetchedPosts = await getPosts();
-                setPosts(fetchedPosts);
+                const sortedPosts = fetchedPosts.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+                setPosts(sortedPosts);
             } catch (err) {
                 console.error("Error fetching posts:", err);
             } finally {
@@ -32,10 +33,12 @@ export function PostsPage({ theme }: PostsPageProps) {
         fetchPosts();
     }, []);
 
-    const filteredPosts = posts.filter(post =>
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.description.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredPosts = posts
+        .filter(post =>
+            post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            post.description.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
     
     const PostSkeleton = () => (
         <div className={`${theme === 'dark' ? 'bg-neutral-900' : 'bg-white'} rounded-lg overflow-hidden shadow-md`}>
