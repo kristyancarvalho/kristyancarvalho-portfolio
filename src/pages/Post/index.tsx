@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getPost, Post } from '@/firebase/firestore';
 import { Skeleton } from '@/components/Skeleton';
 import Breadcrumbs from '@/components/Breadcrumb';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 interface PostPageProps {
     theme: 'light' | 'dark';
@@ -48,14 +48,14 @@ export function PostPage({ theme }: PostPageProps) {
     return (
         <div className={`min-h-screen ${theme === 'dark' ? 'bg-zinc-950 text-white' : 'bg-zinc-200/50 text-black'}`}>
             <Helmet>
-                <title>{post ? post.title : 'Carregando...'}</title>
-                <meta name="description" content={post ? post.description : ''} />
-                <meta property="og:title" content={post ? post.title : ''} />
-                <meta property="og:description" content={post ? post.description : ''} />
-                <meta property="og:image" content={post ? post.coverImage : ''} />
-                <meta property="og:url" content={post ? `https://kristyancarvalho.vercel.app/post/${post.id}` : ''} />
-                <meta property="og:type" content="article" />
-                <link rel="canonical" href={post ? `https://kristyancarvalho.vercel.app/post/${post.id}` : ''} />
+                <title id="page-title">{post ? post.title : 'Carregando...'}</title>
+                <meta id="page-description" name="description" content={post ? post.description : ''} />
+                <meta id="og-title" property="og:title" content={post ? post.title : ''} />
+                <meta id="og-description" property="og:description" content={post ? post.description : ''} />
+                <meta id="og-image" property="og:image" content={post ? post.coverImage : ''} />
+                <meta id="og-url" property="og:url" content={post ? `https://kristyancarvalho.vercel.app/post/${post.id}` : ''} />
+                <meta id="og-type" property="og:type" content="article" />
+                <link id="canonical-link" rel="canonical" href={post ? `https://kristyancarvalho.vercel.app/post/${post.id}` : ''} />
             </Helmet>
             <div className="container mx-auto my-4 md:my-12 py-4 md:py-8 min-[320px]:px-2 min-[320px]:my-16">
                 <div className="min-h-screen flex items-center justify-center lg:p-4 md:p-8">
