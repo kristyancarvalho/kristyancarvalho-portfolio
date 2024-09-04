@@ -62,7 +62,7 @@ export function TechCarousel({ theme }: TechCarouselProps) {
       <Slider {...settings}>
         {technologies.map((tech, index) => (
           <div key={index} className="px-4">
-            <div className={`${theme === 'dark' ? 'bg-neutral-800' : 'bg-neutral-200'} rounded-lg p-4 flex items-center justify-center h-24 hover:scale-110 transition-all`}>
+            <div className={`${theme === 'dark' ? 'bg-neutral-800' : 'bg-white'} rounded-lg p-4 flex items-center justify-center h-24 hover:scale-110 transition-all`}>
                 <img
                     src={tech.logo} 
                     alt={tech.name} 
