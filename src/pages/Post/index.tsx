@@ -67,7 +67,7 @@ export function PostPage({ theme }: PostPageProps) {
                             <>
                                 <img src={post.coverImage} alt={post.title} className="w-full h-48 md:h-64 object-cover rounded-lg mb-4 md:mb-8" />
                                 <h1 className={`text-2xl md:text-4xl ${theme === 'dark' ? 'text-white' : 'text-black'} font-bold mb-2 md:mb-4`}>{post.title}</h1>
-                                <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} mb-4 md:mb-8 text-sm md:text-base`}>{post.description}</p>
+                                <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} min-[320px]:mb-12 mb-4 md:mb-8 text-sm md:text-base`}>{post.description}</p>
                                 <div 
                                     className={`${theme === 'dark' ? 'text-white' : 'text-black'} post-content text-sm md:text-base`} 
                                     dangerouslySetInnerHTML={{ __html: post.content }} 
