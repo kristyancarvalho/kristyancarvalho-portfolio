@@ -81,7 +81,7 @@ export function PostsPage({ theme }: PostsPageProps) {
 
     return (
         <div className={`transition-colors duration-300 ease-in-out ${theme === 'dark' ? 'bg-zinc-950' : 'bg-zinc-200/50'} min-h-screen flex flex-col`}>
-            <main className={`container mx-auto px-4 pb-8 pt-28 flex-grow`}>
+            <main className={`container mx-auto px-4 pb-8 lg:py-32 min-[320px]:py-24 flex-grow`}>
             <motion.span 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
