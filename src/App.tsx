@@ -7,6 +7,7 @@ import { NotFound } from "./pages/404";
 import { NavigationBar } from "./components/navigation";
 import { PostsPage } from './pages/Posts';
 import { PostPage } from './pages/Post';
+import { Footer } from './components/Footer';
 
 export function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -62,6 +63,7 @@ export function App() {
           <Route path="/post/:id" element={<PostPage theme={theme} />} />
           <Route path="*" element={<NotFound theme={theme} />} />
         </Routes>
+        <Footer theme={theme} />
       </div>
     </Router>
   );
