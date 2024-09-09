@@ -91,8 +91,8 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
     
 
     return (
-        <div className={`overflow-x-hidden transition-colors duration-300 ease-in-out ${theme === 'dark' ? 'bg-zinc-950' : 'bg-zinc-200/50'}`}>
-            <main className="container w-full lg:py-32 min-[320px]:py-24 px-4 lg:px-36">
+        <div className={`transition-colors duration-300 ease-in-out ${theme === 'dark' ? 'bg-zinc-950' : 'bg-zinc-200/50'} min-h-screen flex flex-col`}>
+            <main className={`container mx-auto px-4 pb-8 lg:py-32 min-[320px]:py-24 flex-grow`}>
                 <motion.span 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -123,5 +123,5 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
                 </div>
             </main>
         </div>
-    )
+    );
 }
