@@ -20,7 +20,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ theme, title, descript
                 src={imageSrc}
                 effect="blur"
                 alt={`${title}-cover`}
-                className="w-full h-40 object-cover rounded-t-md"
+                className="w-full lg:h-60 min-[320px]:h-40 object-cover rounded-t-md"
             />
             <div id="text" className="p-4 flex flex-col gap-4 flex-grow">
                 <span id="title">
