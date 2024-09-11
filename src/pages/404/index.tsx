@@ -19,7 +19,7 @@ export function NotFound({ theme }: NotFoundProps) {
                         id="rocketImage"                
                     >
                         <LazyLoadImage
-                            src="/rocket.png"
+                            src="/rocket.webp"
                             effect="blur"
                             alt="rocket"
                             className="z-10 h-24 w-24"
