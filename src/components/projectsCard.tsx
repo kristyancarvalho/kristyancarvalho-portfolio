@@ -72,7 +72,8 @@ export const ProjectCard = ({
                     <div className="grid grid-cols-4 lg:grid-cols-5 gap-2 items-center">
                         {technologies.map((tech, index) => (
                             <div key={index} className="flex flex-col items-center">
-                                <img 
+                                <LazyLoadImage
+                                    effect="blur" 
                                     src={tech.logo} 
                                     alt={tech.name} 
                                     className="w-12 h-12 object-cover"
