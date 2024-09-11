@@ -73,7 +73,7 @@ export function AboutPage({ theme }: AboutPageProps) {
                             }}
                         >
                             <LazyLoadImage
-                                src="/laptop.png"
+                                src="/laptop.webp"
                                 effect="blur"
                                 alt="laptop"
                                 className="max-h-screen-sm max-w-screen-sm lg:max-h-64 min-[320px]:max-h-56"
