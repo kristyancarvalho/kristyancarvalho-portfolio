@@ -46,7 +46,7 @@ export function Footer({ theme }: FooterProps) {
                         <SocialMedia theme={theme} />
                     </div>
                 </div>
-                <div className="mt-8 pt-4 border-t border-zinc-700 text-center text-sm w-full">
+                <div className={`mt-8 pt-4 border-t text-center text-sm w-full ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-300'}`}>
                     <p>&copy; {new Date().getFullYear()} Kristyan Carvalho. Todos os direitos reservados.</p>
                 </div>
             </div>
