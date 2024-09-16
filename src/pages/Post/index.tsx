@@ -9,6 +9,9 @@ interface PostPageProps {
     theme: 'light' | 'dark';
 }
 
+const POST_CACHE_KEY = 'cachedPost';
+const POST_CACHE_EXPIRATION = 1000 * 60 * 60;
+
 export function PostPage({ theme }: PostPageProps) {
     const [post, setPost] = useState<Post | null>(null);
     const [loading, setLoading] = useState(true);
@@ -19,8 +22,27 @@ export function PostPage({ theme }: PostPageProps) {
             if (id) {
                 setLoading(true);
                 try {
+                    const cachedData = localStorage.getItem(`${POST_CACHE_KEY}_${id}`);
+                    if (cachedData) {
+                        const { post: cachedPost, timestamp } = JSON.parse(cachedData);
+                        if (Date.now() - timestamp < POST_CACHE_EXPIRATION) {
+                            setPost({
+                                ...cachedPost,
+                                createdAt: new Date(cachedPost.createdAt)
+                            });
+                            setLoading(false);
+                            return;
+                        }
+                    }
+
                     const fetchedPost = await getPost(id);
-                    setPost(fetchedPost);
+                    if (fetchedPost) {
+                        setPost(fetchedPost);
+                        localStorage.setItem(`${POST_CACHE_KEY}_${id}`, JSON.stringify({
+                            post: fetchedPost,
+                            timestamp: Date.now()
+                        }));
+                    }
                 } catch (error) {
                     console.error("Error fetching post:", error);
                 } finally {
