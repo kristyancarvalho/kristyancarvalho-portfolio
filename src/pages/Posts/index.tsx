@@ -72,7 +72,6 @@ export function PostsPage({ theme }: PostsPageProps) {
             </div>
         </div>
     );
-
     const formatDate = (date: Date) => {
         return new Intl.DateTimeFormat('pt-BR', {
             year: 'numeric',
@@ -106,7 +105,7 @@ export function PostsPage({ theme }: PostsPageProps) {
     return (
         <div className={`transition-colors duration-300 ease-in-out ${theme === 'dark' ? 'bg-zinc-950' : 'bg-zinc-200/50'} min-h-screen flex flex-col`}>
             <main className={`container mx-auto px-4 pb-8 lg:py-32 min-[320px]:py-24 flex-grow`}>
-            <motion.span 
+                <motion.span 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ type: "just", duration: 0.5 }}
@@ -165,6 +164,18 @@ export function PostsPage({ theme }: PostsPageProps) {
                         )}
                     </motion.div>
                 </div>
+                {filteredPosts.length == 0 && (
+                    <motion.div 
+                        className='flex flex-col items-center justify-center'
+                    >
+                        <p className="font-semibold text-gray-500 dark:text-gray-400">
+                            Nenhum post encontrado
+                        </p>
+                        <span className='text-gray-500 dark:text-gray-400'>
+                            Tente pesquisar por outros termos
+                        </span>
+                    </motion.div>
+                )}
             </main>
         </div>
     );
