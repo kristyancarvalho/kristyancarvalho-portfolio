@@ -10,6 +10,7 @@ interface PostPageProps {
 }
 
 const POST_CACHE_KEY = 'cachedPost';
+const POST_VERSION_KEY = 'postVersion';
 const POST_CACHE_EXPIRATION = 1000 * 60 * 60;
 
 export function PostPage({ theme }: PostPageProps) {
@@ -23,7 +24,10 @@ export function PostPage({ theme }: PostPageProps) {
                 setLoading(true);
                 try {
                     const cachedData = localStorage.getItem(`${POST_CACHE_KEY}_${id}`);
-                    if (cachedData) {
+                    const cachedVersion = localStorage.getItem(`${POST_VERSION_KEY}_${id}`);
+                    const currentVersion = Date.now().toString();
+                    
+                    if (cachedData && cachedVersion === currentVersion) {
                         const { post: cachedPost, timestamp } = JSON.parse(cachedData);
                         if (Date.now() - timestamp < POST_CACHE_EXPIRATION) {
                             setPost({
@@ -42,6 +46,7 @@ export function PostPage({ theme }: PostPageProps) {
                             post: fetchedPost,
                             timestamp: Date.now()
                         }));
+                        localStorage.setItem(`${POST_VERSION_KEY}_${id}`, currentVersion);
                     }
                 } catch (error) {
                     console.error("Error fetching post:", error);
