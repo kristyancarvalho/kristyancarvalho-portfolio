@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { getPost, Post } from '@/firebase/firestore';
 import { Skeleton } from '@/components/Skeleton';
@@ -12,51 +12,60 @@ interface PostPageProps {
 const POST_CACHE_KEY = 'cachedPost';
 const POST_VERSION_KEY = 'postVersion';
 const POST_CACHE_EXPIRATION = 1000 * 60 * 60;
+const POLLING_INTERVAL = 30000;
 
 export function PostPage({ theme }: PostPageProps) {
     const [post, setPost] = useState<Post | null>(null);
     const [loading, setLoading] = useState(true);
     const { id } = useParams<{ id: string }>();
 
-    useEffect(() => {
-        const fetchPost = async () => {
-            if (id) {
-                setLoading(true);
-                try {
-                    const cachedData = localStorage.getItem(`${POST_CACHE_KEY}_${id}`);
-                    const cachedVersion = localStorage.getItem(`${POST_VERSION_KEY}_${id}`);
-                    const currentVersion = Date.now().toString();
-                    
-                    if (cachedData && cachedVersion === currentVersion) {
-                        const { post: cachedPost, timestamp } = JSON.parse(cachedData);
-                        if (Date.now() - timestamp < POST_CACHE_EXPIRATION) {
-                            setPost({
-                                ...cachedPost,
-                                createdAt: new Date(cachedPost.createdAt)
-                            });
-                            setLoading(false);
-                            return;
-                        }
-                    }
-
-                    const fetchedPost = await getPost(id);
-                    if (fetchedPost) {
-                        setPost(fetchedPost);
-                        localStorage.setItem(`${POST_CACHE_KEY}_${id}`, JSON.stringify({
-                            post: fetchedPost,
-                            timestamp: Date.now()
-                        }));
-                        localStorage.setItem(`${POST_VERSION_KEY}_${id}`, currentVersion);
-                    }
-                } catch (error) {
-                    console.error("Error fetching post:", error);
-                } finally {
-                    setLoading(false);
+    const fetchPost = useCallback(async (showLoading = true) => {
+        if (!id) return;
+        
+        if (showLoading) setLoading(true);
+        try {
+            const cachedData = localStorage.getItem(`${POST_CACHE_KEY}_${id}`);
+            const cachedVersion = localStorage.getItem(`${POST_VERSION_KEY}_${id}`);
+            
+            const currentVersion = Date.now().toString();
+            
+            if (cachedData && cachedVersion === currentVersion) {
+                const { post: cachedPost, timestamp } = JSON.parse(cachedData);
+                if (Date.now() - timestamp < POST_CACHE_EXPIRATION) {
+                    setPost({
+                        ...cachedPost,
+                        createdAt: new Date(cachedPost.createdAt)
+                    });
+                    if (showLoading) setLoading(false);
+                    return;
                 }
             }
-        };
-        fetchPost();
+
+            const fetchedPost = await getPost(id);
+            if (fetchedPost) {
+                setPost(fetchedPost);
+                localStorage.setItem(`${POST_CACHE_KEY}_${id}`, JSON.stringify({
+                    post: fetchedPost,
+                    timestamp: Date.now()
+                }));
+                localStorage.setItem(`${POST_VERSION_KEY}_${id}`, currentVersion);
+            }
+        } catch (error) {
+            console.error("Error fetching post:", error);
+        } finally {
+            if (showLoading) setLoading(false);
+        }
     }, [id]);
+
+    useEffect(() => {
+        fetchPost();
+
+        const pollInterval = setInterval(() => {
+            fetchPost(false);
+        }, POLLING_INTERVAL);
+
+        return () => clearInterval(pollInterval);
+    }, [fetchPost]);
 
     const PostSkeleton = () => (
         <>
