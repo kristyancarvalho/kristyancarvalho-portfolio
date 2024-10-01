@@ -13,6 +13,7 @@
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-toast": "^1.2.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/react-helmet": "^6.1.11",
     "@types/react-lazy-load-image-component": "^1.6.4",
