@@ -1,5 +1,5 @@
 import { db } from './config';
-import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs, getDoc } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs, getDoc, increment } from 'firebase/firestore';
 
 export interface Post {
   id?: string;
@@ -8,12 +8,17 @@ export interface Post {
   description: string;
   coverImage: string;
   createdAt: Date;
+  views: number;
 }
 
 const COLLECTION_NAME = 'posts';
 
-export const addPost = async (post: Omit<Post, 'id'>): Promise<string> => {
-  const docRef = await addDoc(collection(db, COLLECTION_NAME), post);
+export const addPost = async (post: Omit<Post, 'id' | 'views'>): Promise<string> => {
+  const postWithViews = {
+    ...post,
+    views: 0
+  };
+  const docRef = await addDoc(collection(db, COLLECTION_NAME), postWithViews);
   return docRef.id;
 };
 
@@ -34,7 +39,8 @@ export const getPosts = async (): Promise<Post[]> => {
     return { 
       id: doc.id, 
       ...data,
-      createdAt: data.createdAt.toDate()
+      createdAt: data.createdAt.toDate(),
+      views: data.views || 0
     } as Post;
   });
 };
@@ -44,8 +50,21 @@ export const getPost = async (id: string): Promise<Post | null> => {
   const docSnap = await getDoc(docRef);
   
   if (docSnap.exists()) {
-    return { id: docSnap.id, ...docSnap.data() } as Post;
+    const data = docSnap.data();
+    return { 
+      id: docSnap.id, 
+      ...data,
+      createdAt: data.createdAt.toDate(),
+      views: data.views || 0
+    } as Post;
   } else {
     return null;
   }
+};
+
+export const incrementPostViews = async (id: string): Promise<void> => {
+  const postRef = doc(db, COLLECTION_NAME, id);
+  await updateDoc(postRef, {
+    views: increment(1)
+  });
 };

@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPost, Post } from '@/firebase/firestore';
+import { getPost, incrementPostViews, Post } from '@/firebase/firestore';
 import { Skeleton } from '@/components/Skeleton';
 import Breadcrumbs from '@/components/Breadcrumb';
 import { Helmet } from 'react-helmet-async';
+import { Eye } from 'lucide-react';
 
 interface PostPageProps {
     theme: 'light' | 'dark';
@@ -11,6 +12,7 @@ interface PostPageProps {
 
 const POST_CACHE_KEY = 'cachedPost';
 const POST_VERSION_KEY = 'postVersion';
+const VIEW_TRACKED_KEY = 'viewTracked';
 const POST_CACHE_EXPIRATION = 1000 * 60 * 60;
 const POLLING_INTERVAL = 30000;
 
@@ -19,17 +21,18 @@ export function PostPage({ theme }: PostPageProps) {
     const [loading, setLoading] = useState(true);
     const { id } = useParams<{ id: string }>();
 
-    const fetchPost = useCallback(async (showLoading = true) => {
+    const fetchPost = useCallback(async (showLoading = true, incrementView = false) => {
         if (!id) return;
         
         if (showLoading) setLoading(true);
         try {
             const cachedData = localStorage.getItem(`${POST_CACHE_KEY}_${id}`);
             const cachedVersion = localStorage.getItem(`${POST_VERSION_KEY}_${id}`);
+            const viewTracked = localStorage.getItem(`${VIEW_TRACKED_KEY}_${id}`);
             
             const currentVersion = Date.now().toString();
             
-            if (cachedData && cachedVersion === currentVersion) {
+            if (cachedData && cachedVersion === currentVersion && !incrementView) {
                 const { post: cachedPost, timestamp } = JSON.parse(cachedData);
                 if (Date.now() - timestamp < POST_CACHE_EXPIRATION) {
                     setPost({
@@ -42,6 +45,13 @@ export function PostPage({ theme }: PostPageProps) {
             }
 
             const fetchedPost = await getPost(id);
+            
+            if (fetchedPost && incrementView && !viewTracked) {
+                await incrementPostViews(id);
+                localStorage.setItem(`${VIEW_TRACKED_KEY}_${id}`, 'true');
+                fetchedPost.views += 1; // Increment local count immediately
+            }
+
             if (fetchedPost) {
                 setPost(fetchedPost);
                 localStorage.setItem(`${POST_CACHE_KEY}_${id}`, JSON.stringify({
@@ -58,7 +68,7 @@ export function PostPage({ theme }: PostPageProps) {
     }, [id]);
 
     useEffect(() => {
-        fetchPost();
+        fetchPost(true, true); // Initial fetch with view increment
 
         const pollInterval = setInterval(() => {
             fetchPost(false);
@@ -104,6 +114,15 @@ export function PostPage({ theme }: PostPageProps) {
                         ) : post ? (
                             <>
                                 <img src={post.coverImage} alt={post.title} className="w-full h-48 md:h-64 object-cover rounded-lg mb-4 md:mb-8" />
+                                <div className={`text-sm flex items-center lg:mb-4 min-[320px]:mb-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                                    <Eye className="w-4 h-4 mr-1 -mb-[0.5px]" />
+                                    <span className='flex items-center gap-1'>
+                                        Visualizações:
+                                        <strong>
+                                            {post.views}
+                                        </strong>
+                                    </span>
+                                </div>
                                 <h1 className={`text-2xl md:text-4xl ${theme === 'dark' ? 'text-white' : 'text-black'} font-bold mb-2 md:mb-4`}>{post.title}</h1>
                                 <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} min-[320px]:mb-12 mb-4 md:mb-8 text-sm md:text-base`}>{post.description}</p>
                                 <div 
