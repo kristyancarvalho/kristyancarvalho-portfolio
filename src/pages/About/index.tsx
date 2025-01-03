@@ -179,7 +179,7 @@ export function AboutPage({ theme }: AboutPageProps) {
                                 animate={{ opacity: 1, y: 15}}
                                 transition={{ delay: 1.6, type: "just", duration: 0.5 }}
                             >
-                                <code className={`text-3xl px-2 py-1 ${theme === 'dark' ? 'text-neutral-500/80 bg-neutral-800/50' : 'text-neutral-500 bg-neutral-800/20'} rounded-sm`}>
+                                <code className={`text-3xl px-2 ${theme === 'dark' ? 'text-neutral-500 bg-neutral-800/50' : 'text-neutral-600 bg-neutral-300/50'} rounded-sm overflow-hidden`}>
                                     /tecnologias
                                 </code>
                             </motion.span>
@@ -189,7 +189,7 @@ export function AboutPage({ theme }: AboutPageProps) {
                                 animate={{ opacity: 1, y: 15}}
                                 transition={{ delay: 1.8, type: "just", duration: 0.5 }}
                             >
-                                <code className={`text-2xl px-2 py-1 ${theme === 'dark' ? 'text-neutral-500/80 bg-neutral-800/50' : 'text-neutral-500 bg-neutral-800/20'} rounded-sm`}>
+                                <code className={`text-2xl px-2 py-1 ${theme === 'dark' ? 'text-neutral-500 bg-neutral-800/50' : 'text-neutral-600 bg-neutral-300/50'} rounded-sm`}>
                                     Front-End
                                 </code>
                                 <motion.p
@@ -223,7 +223,7 @@ export function AboutPage({ theme }: AboutPageProps) {
                                     animate={{ opacity: 1, y: 15}}
                                     transition={{ delay: 2.6, type: "just", duration: 0.5 }}
                             >
-                                <code className={`text-2xl px-2 py-1 ${theme === 'dark' ? 'text-neutral-500/80 bg-neutral-800/50' : 'text-neutral-500 bg-neutral-800/20'} rounded-sm`}>
+                                <code className={`text-2xl px-2 py-1 ${theme === 'dark' ? 'text-neutral-500 bg-neutral-800/50' : 'text-neutral-600 bg-neutral-300/50'} rounded-sm`}>
                                     Back-End
                                 </code>
                                 <motion.p
@@ -256,7 +256,7 @@ export function AboutPage({ theme }: AboutPageProps) {
                                         animate={{ opacity: 1, y: 15}}
                                         transition={{ delay: 3.4, type: "just", duration: 0.5 }}
                                 >
-                                    <code className={`text-2xl px-2 py-1 ${theme === 'dark' ? 'text-neutral-500/80 bg-neutral-800/50' : 'text-neutral-500 bg-neutral-800/20'} rounded-sm`}>
+                                    <code className={`text-2xl px-2 py-1 ${theme === 'dark' ? 'text-neutral-500 bg-neutral-800/50' : 'text-neutral-600 bg-neutral-300/50'} rounded-sm`}>
                                         Ferramentas
                                     </code>
                                     <motion.p
