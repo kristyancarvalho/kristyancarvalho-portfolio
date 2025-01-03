@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { TechCarousel } from "@/components/TechCarousel";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -15,9 +15,17 @@ export function AboutPage({ theme }: AboutPageProps) {
     const aboutRef = useRef(null);
     const techRef = useRef(null);
     const carouselRef = useRef(null);
-    const isAboutInView = useInView(aboutRef, { once: true, amount: 0.3 });
-    const isTechInView = useInView(techRef, { once: true, amount: 0.6 });
-    const isCarouselInView = useInView(carouselRef, { once: true, amount: 0.6 });
+    const containerRef = useRef(null);
+    
+
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"]
+    });
+
+    const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.8]);
+    const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
+    const y = useTransform(scrollYProgress, [0, 1], [0, 50]);
 
     useEffect(() => {
         if (location.hash === '#technologies') {
@@ -37,18 +45,25 @@ export function AboutPage({ theme }: AboutPageProps) {
         }
     }, [location]);
 
-
     const breadcrumbItems = [
         { label: 'Sobre mim', href: '#about' },
         { label: 'Tecnologias', href: '#technologies' },
     ];
-
     return (
         <div className={`overflow-x-hidden transition-colors duration-300 ease-in-out ${theme === 'dark' ? 'bg-zinc-950' : 'bg-zinc-200/50'}`}>
-            <main className="container flex w-screen lg:py-28 min-[320px]:py-24 flex-col gap-8 lg:px-36">
-                <div className="lg:-mb-12 lg:mt-8 min-[320px]:-mb-8">
+            <motion.main 
+                ref={containerRef}
+                style={{ opacity, scale }}
+                className="container flex w-screen lg:py-28 min-[320px]:py-24 flex-col gap-8 lg:px-36"
+            >
+                <motion.div 
+                    className="lg:-mb-12 lg:mt-8 min-[320px]:-mb-8"
+                    initial={{ x: -100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.6 }}
+                >
                     <Breadcrumbs items={breadcrumbItems} theme={theme} />
-                </div>
+                </motion.div>
 
                 <div className="flex flex-col">
                     <motion.div
@@ -60,6 +75,7 @@ export function AboutPage({ theme }: AboutPageProps) {
                             damping: 30,
                             delay: 0.1
                         }}
+                        style={{ y }}
                         className="flex justify-center items-center w-full bg-violet-500/50 rounded-lg mb-8"
                     >
                         <motion.div
@@ -80,11 +96,13 @@ export function AboutPage({ theme }: AboutPageProps) {
                             />
                         </motion.div>
                     </motion.div>
+
                     <motion.div
                         ref={aboutRef}
                         initial={{ opacity: 0, y: 50 }}
-                        animate={isAboutInView ? { opacity: 1, y: 0 } : {}}
-                        transition={{ duration: 0.5 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.7, type: "spring" }}
                         className="flex-col items-end"
                     >
                         <div id="about" className="">
@@ -149,8 +167,9 @@ export function AboutPage({ theme }: AboutPageProps) {
                 <motion.div
                     ref={techRef}
                     initial={{ opacity: 0, y: 50 }}
-                    animate={isTechInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.7, type: "spring" }}
                     id="technologies" 
                     className="py-12 flex flex-col"
                 >
@@ -287,13 +306,14 @@ export function AboutPage({ theme }: AboutPageProps) {
 
                 <motion.div
                     ref={carouselRef}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={isCarouselInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.5 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.7, type: "spring" }}
                 >
                     <TechCarousel theme={theme} />
                 </motion.div>
-            </main>
+            </motion.main>
         </div>
     )
 }
