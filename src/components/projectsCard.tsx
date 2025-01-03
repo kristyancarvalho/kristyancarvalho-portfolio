@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
 interface ProjectCardProps {
     theme: 'light' | 'dark';
     title: string;
@@ -21,7 +22,7 @@ interface ProjectCardProps {
     technologies: Array<{ name: string; logo: string }>;
 }
 
-export const ProjectCard = ({ 
+export function ProjectCard({ 
     theme, 
     title, 
     description, 
@@ -30,25 +31,29 @@ export const ProjectCard = ({
     platforms, 
     detailedDescription, 
     technologies 
-}: ProjectCardProps) => {
+}: ProjectCardProps) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <div className={`w-full h-full rounded-md ${theme === 'dark' ? 'bg-neutral-800/50' : 'bg-white'} flex flex-col cursor-pointer`}>
-                    <LazyLoadImage
-                        src={imageSrc}
-                        effect="blur"
-                        alt={`${title}-cover`}
-                        className="w-full lg:h-60 min-[320px]:h-40 object-cover rounded-t-md"
-                    />
-                    <div className="p-4 flex flex-col gap-4 flex-grow">
+                <div className={`w-full ${theme === 'dark' ? 'bg-neutral-900' : 'bg-white'} rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300`}>
+                    <div className="h-52">
+                        <LazyLoadImage
+                            src={imageSrc}
+                            effect="blur"
+                            alt={`${title}-cover`}
+                            wrapperClassName="w-full h-52 !block"
+                            className="w-full h-52 object-cover rounded-t-md"
+                        />
+                    </div>
+
+                    <div className="p-4 flex flex-col gap-4">
                         <span>
-                            <code className={`text-2xl ${theme === 'dark' ? 'text-neutral-500' : 'text-neutral-600'}`}><strong>{title}</strong></code>
+                            <code className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-black'} mb-1 line-clamp-2`}><strong>{title}</strong></code>
                         </span>
-                        <span className={`text-sm ${theme === 'dark' ? 'text-neutral-500/80' : 'text-neutral-500'}`}>
+                        <span className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} mb-2 line-clamp-2`}>
                             {description}
                         </span>
-                        <div className={`flex items-center gap-2 mt-auto ${theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'}`}>
+                        <div className={`flex items-center gap-2 ${theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'}`}>
                             {platforms.map((Icon, index) => <Icon key={index} size={18} />)}
                         </div>
                     </div>
@@ -76,7 +81,7 @@ export const ProjectCard = ({
                                     effect="blur" 
                                     src={tech.logo} 
                                     alt={tech.name} 
-                                    className="w-12 h-12 object-cover"
+                                    className="lg:w-12 lg:h-12 min-[320px]:h:8 min-[320px]:w-8 object-cover"
                                     title={tech.name}
                                 />
                                 <span className="text-xs mt-1 text-center">{tech.name}</span>
@@ -93,4 +98,4 @@ export const ProjectCard = ({
             </DialogContent>
         </Dialog>
     );
-};
+}
