@@ -3,12 +3,31 @@ import { TechCarousel } from "@/components/TechCarousel";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useLocation } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumb";
 
 interface AboutPageProps {
     theme: 'light' | 'dark';
 }
+
+const imageCache = new Map();
+const LAPTOP_IMAGE_URL = "/laptop.webp";
+
+const preloadImage = (src: string): Promise<void> => {
+    if (imageCache.has(src)) {
+        return Promise.resolve();
+    }
+
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+            imageCache.set(src, img);
+            resolve();
+        };
+        img.onerror = reject;
+        img.src = src;
+    });
+};
 
 export function AboutPage({ theme }: AboutPageProps) {
     const location = useLocation();
@@ -16,7 +35,13 @@ export function AboutPage({ theme }: AboutPageProps) {
     const techRef = useRef(null);
     const carouselRef = useRef(null);
     const containerRef = useRef(null);
-    
+    const [imageLoaded, setImageLoaded] = useState(false);
+
+    useEffect(() => {
+        preloadImage(LAPTOP_IMAGE_URL)
+            .then(() => setImageLoaded(true))
+            .catch(error => console.error('Error preloading image:', error));
+    }, []);
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -49,6 +74,7 @@ export function AboutPage({ theme }: AboutPageProps) {
         { label: 'Sobre mim', href: '#about' },
         { label: 'Tecnologias', href: '#technologies' },
     ];
+
     return (
         <div className={`overflow-x-hidden transition-colors duration-300 ease-in-out ${theme === 'dark' ? 'bg-zinc-950' : 'bg-zinc-200/50'}`}>
             <motion.main 
@@ -80,7 +106,7 @@ export function AboutPage({ theme }: AboutPageProps) {
                     >
                         <motion.div
                             initial={{ opacity: 0, y: 50 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            animate={{ opacity: imageLoaded ? 1 : 0, y: imageLoaded ? 0 : 50 }}
                             transition={{                             
                                 type: "spring", 
                                 stiffness: 200,
@@ -89,10 +115,19 @@ export function AboutPage({ theme }: AboutPageProps) {
                             }}
                         >
                             <LazyLoadImage
-                                src="/laptop.webp"
+                                src={LAPTOP_IMAGE_URL}
                                 effect="blur"
                                 alt="laptop"
                                 className="max-h-screen-sm max-w-screen-sm lg:max-h-64 min-[320px]:max-h-56"
+                                beforeLoad={() => {
+                                    // Use cached image if available
+                                    if (imageCache.has(LAPTOP_IMAGE_URL)) {
+                                        setImageLoaded(true);
+                                    }
+                                }}
+                                afterLoad={() => {
+                                    setImageLoaded(true);
+                                }}
                             />
                         </motion.div>
                     </motion.div>
