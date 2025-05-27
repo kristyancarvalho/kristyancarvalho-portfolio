@@ -73,7 +73,7 @@ export function HomePage({ theme }: HomePageProps) {
                             <Download />
                             Baixar currículo
                         </a>
-                        <Link to="/projects"
+                        <Link to="/projetos"
                         className={`${theme === 'dark' ? 'text-white' : 'text-neutral-600'} px-4 py-2 underline`}>
                             Ver projetos
                         </Link>

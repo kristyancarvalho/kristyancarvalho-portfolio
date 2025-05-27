@@ -10,8 +10,8 @@ import { motion, useScroll } from 'framer-motion';
 
 const navigationArray = [
   { title: '/inicio', link: '/' },
-  { title: '/sobre', link: '/about' },
-  { title: '/projetos', link: '/projects' },
+  { title: '/sobre', link: '/sobre' },
+  { title: '/projetos', link: '/projetos' },
   { title: '/posts', link: '/posts' }
 ];
 

@@ -57,8 +57,8 @@ export function App() {
         <NavigationBar theme={theme} toggleTheme={toggleTheme} />
         <Routes>
           <Route path="/" element={<HomePage theme={theme} />} />
-          <Route path="/projects" element={<ProjectsPage theme={theme} />} />
-          <Route path="/about" element={<AboutPage theme={theme} />} />
+          <Route path="/projetos" element={<ProjectsPage theme={theme} />} />
+          <Route path="/sobre" element={<AboutPage theme={theme} />} />
           <Route path="/posts" element={<PostsPage theme={theme} />} />
           <Route path="/post/:id" element={<PostPage theme={theme} />} />
           <Route path="*" element={<NotFound theme={theme} />} />

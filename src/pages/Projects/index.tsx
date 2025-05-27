@@ -55,7 +55,7 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
         },
         {
             title: "EcoCash",
-            description: "Plataforma digital sustentável que conecta hardware e web para incentivar a reciclagem.",
+            description: "Plataforma digital sustentável que conecta hardware, web e mobile para incentivar a reciclagem.",
             imageSrc: "/EcoCash.webp",
             githubLink: "https://github.com/kristyancarvalho/EcoCash",
             detailedDescription: "Plataforma digital sustentável que conecta hardware e web para incentivar a reciclagem. Utilizando Arduino, ESP8266 e React, o Ecocash coleta dados de materiais recicláveis e os exibe em tempo real, oferecendo uma experiência fluida e intuitiva para promover práticas ecológicas.",
@@ -65,7 +65,7 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
                 { name: "Vite", logo: "/tech-logos/vite.webp" },
                 { name: "Firebase", logo: "/tech-logos/Firebase.webp" },
             ],
-            platforms: [Chrome],
+            platforms: [Chrome, Smartphone],
         },
         {
             title: "Nearby",
@@ -81,6 +81,19 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
                 { name: "Express", logo: "/tech-logos/Express.webp" },
                 { name: "SQ Lite", logo: "/tech-logos/SQLite.webp" },
                 { name: "Prisma", logo: "/tech-logos/Prisma.webp" },
+            ],
+            platforms: [Smartphone],
+        },
+        {
+            title: "Codewhisper CLI",
+            description: "Um agente de código inteligente via linha de comando que ajuda os desenvolvedores a escrever códigos mais eficientes.",
+            imageSrc: "/Codewhisper.webp",
+            githubLink: "https://github.com/kristyancarvalho/Nearby",
+            detailedDescription: "O CodeWhisper CLI é uma ferramenta de linha de comando que utiliza a API do OpenRouter para fornecer respostas a perguntas baseadas no contexto de arquivos de código fornecidos. Ele é projetado para ser fácil de usar e configurar, permitindo que desenvolvedores obtenham ajuda em suas tarefas de programação de forma rápida e eficiente.",
+            technologies: [
+                { name: "Typescript", logo: "/tech-logos/typescript.webp" },
+                { name: "NodeJS", logo: "/tech-logos/Node.js.webp" },
+                { name: "SQ Lite", logo: "/tech-logos/SQLite.webp" },
             ],
             platforms: [Smartphone],
         },
