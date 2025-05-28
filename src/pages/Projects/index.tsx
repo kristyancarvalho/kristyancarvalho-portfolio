@@ -95,7 +95,7 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
                 { name: "NodeJS", logo: "/tech-logos/Node.js.webp" },
                 { name: "SQ Lite", logo: "/tech-logos/SQLite.webp" },
             ],
-            platforms: [Smartphone],
+            platforms: [SquareTerminalIcon],
         },
         {
             title: "Gerenciador do Blog",
