@@ -88,7 +88,7 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
             title: "Codewhisper CLI",
             description: "Um agente de código inteligente via linha de comando que ajuda os desenvolvedores a escrever códigos mais eficientes.",
             imageSrc: "/Codewhisper.webp",
-            githubLink: "https://github.com/kristyancarvalho/Nearby",
+            githubLink: "https://github.com/kristyancarvalho/codewhisper-cli",
             detailedDescription: "O CodeWhisper CLI é uma ferramenta de linha de comando que utiliza a API do OpenRouter para fornecer respostas a perguntas baseadas no contexto de arquivos de código fornecidos. Ele é projetado para ser fácil de usar e configurar, permitindo que desenvolvedores obtenham ajuda em suas tarefas de programação de forma rápida e eficiente.",
             technologies: [
                 { name: "Typescript", logo: "/tech-logos/typescript.webp" },
