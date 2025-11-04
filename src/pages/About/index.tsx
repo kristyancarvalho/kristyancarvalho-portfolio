@@ -233,7 +233,7 @@ export function AboutPage({ theme }: AboutPageProps) {
                                     transition={{ delay: 2, type: "just", duration: 0.5 }}
                                     className="text-neutral-500/80"
                                 >
-                                    <strong>Linguagens:</strong> HTML, CSS, JavaScript, TypeScript
+                                    <strong>Linguagens:</strong> HTML, CSS, JavaScript, TypeScript, Lua
                                 </motion.p>
                                 <motion.p
                                     initial={{ opacity: 0, y: 0}}
@@ -267,7 +267,7 @@ export function AboutPage({ theme }: AboutPageProps) {
                                     transition={{ delay: 2.8, type: "just", duration: 0.5 }}
                                     className="text-neutral-500/80"
                                 >
-                                    <strong>Linguagens:</strong> Typescript, Javascript
+                                    <strong>Linguagens:</strong> Typescript, Javascript, Golang
                                 </motion.p>
                                 <motion.p
                                     initial={{ opacity: 0, y: 0}}

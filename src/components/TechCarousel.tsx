@@ -33,7 +33,9 @@ const technologies = [
     { name: 'Prisma', logo: '/tech-logos/Prisma.webp' },
     { name: 'Jest', logo: '/tech-logos/Jest.webp' },
     { name: 'Docker', logo: '/tech-logos/Docker.webp' },
-    { name: 'Kubernetes', logo: '/tech-logos/Kubernetes.webp' }
+    { name: 'Kubernetes', logo: '/tech-logos/Kubernetes.webp' },
+    { name: 'Golang', logo: '/tech-logos/go.svg' },
+    { name: 'Lua', logo: '/tech-logos/lua.svg' }
 ];
 
 export function TechCarousel({ theme }: TechCarouselProps) {
