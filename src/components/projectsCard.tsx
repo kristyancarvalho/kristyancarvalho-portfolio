@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { LucideIcon, Github } from 'lucide-react';
+import { Github } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -17,7 +17,7 @@ interface ProjectCardProps {
     description: string;
     imageSrc: string;
     githubLink: string;
-    platforms: LucideIcon[];
+    platforms: React.ElementType[];
     detailedDescription: string;
     technologies: Array<{ name: string; logo: string }>;
 }
@@ -35,7 +35,7 @@ export function ProjectCard({
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <div className={`w-full ${theme === 'dark' ? 'bg-neutral-900' : 'bg-white'} rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300`}>
+                <div className={`w-full cursor-pointer ${theme === 'dark' ? 'bg-neutral-900' : 'bg-white'} rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300`}>
                     <div className="h-52">
                         <LazyLoadImage
                             src={imageSrc}
