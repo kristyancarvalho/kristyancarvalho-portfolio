@@ -13,8 +13,7 @@ dist-ssr
 *.local
 
 .env
-*.txt
-
+blof-e8566-firebase-adminsdk-zzdib-3f122c2da1.json
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
