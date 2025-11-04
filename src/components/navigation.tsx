@@ -31,6 +31,7 @@ export function NavigationBar({ theme, toggleTheme }: NavigationBarProps) {
 
   const handleLinkClick = () => {
     setIsSheetOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export function NavigationBar({ theme, toggleTheme }: NavigationBarProps) {
             <Link
               key={link}
               to={link}
+              onClick={handleLinkClick}
               ref={(el) => (tabRefs.current[index] = el)}
               className={`relative inline-block ${
                 (pathname === link || (link === '/posts' && pathname.startsWith('/post/')))

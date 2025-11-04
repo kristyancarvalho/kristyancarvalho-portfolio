@@ -16,6 +16,10 @@ const usefulLinks = [
 export function Footer({ theme }: FooterProps) {
     const location = useLocation();
 
+    const handleLinkClick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return (
         <footer className={`mt-auto py-12 lg:py-16 ${theme === 'dark' ? 'bg-zinc-950 text-white border-t border-zinc-800' : 'bg-zinc-200/50 text-zinc-800 border-t border-zinc-300'}`}>
             <div className="container mx-auto px-6 sm:px-8">
@@ -35,6 +39,7 @@ export function Footer({ theme }: FooterProps) {
                                     <li key={link.link}>
                                         <Link 
                                             to={link.link}
+                                            onClick={handleLinkClick}
                                             className={`text-sm transition-colors duration-300 ${
                                                 isActive 
                                                     ? 'text-violet-500 font-semibold' 
