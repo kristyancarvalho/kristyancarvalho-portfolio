@@ -85,6 +85,41 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
             platforms: [Smartphone],
         },
         {
+            title: "Tux Letter",
+            description: "Sistema de newsletter automatizada que coleta, filtra e envia diariamente as principais notícias sobre Linux e software open source.",
+            imageSrc: "/TuxLetter.webp",
+            githubLink: "https://github.com/kristyancarvalho/tux-letter",
+            detailedDescription: "Sistema de newsletter automatizada que coleta, filtra e envia diariamente as principais notícias sobre Linux e software open source, com pipeline de scraping, pós-processamento e envio por e-mail.",
+            technologies: [
+                { name: "Typescript", logo: "/tech-logos/typescript.webp" },
+                { name: "NodeJS", logo: "/tech-logos/Node.js.webp" },
+            ],
+            platforms: [SquareTerminalIcon],
+        },
+        {
+            title: "OpenPilot.nvim",
+            description: "Agente de código inteligente para o editor Neovim, inspirado no GitHub Copilot.",
+            imageSrc: "/OpenPilot.webp",
+            githubLink: "https://github.com/kristyancarvalho/openpilot.nvim",
+            detailedDescription: "Agente de código inteligente para o editor Neovim, inspirado no GitHub Copilot. Oferece suporte a múltiplos modelos de IA, controle de rate limit e configuração personalizada via terminal.",
+            technologies: [
+                { name: "Go", logo: "/tech-logos/go.svg" },
+                { name: "Lua", logo: "/tech-logos/lua.svg" },
+            ],
+            platforms: [SquareTerminalIcon],
+        },
+        {
+            title: "GitPulse",
+            description: "API que gera badges em SVG com o último projeto ativo de um usuário no GitHub.",
+            imageSrc: "/GitPulse.webp",
+            githubLink: "https://github.com/kristyancarvalho/gitpulse",
+            detailedDescription: "API que gera badges em SVG com o último projeto ativo de um usuário no GitHub, ideal para READMEs e portfólios.",
+            technologies: [
+                { name: "Go", logo: "/tech-logos/go.svg" },
+            ],
+            platforms: [Chrome],
+        },
+        {
             title: "Codewhisper CLI",
             description: "Um agente de código inteligente via linha de comando que ajuda os desenvolvedores a escrever códigos mais eficientes.",
             imageSrc: "/Codewhisper.webp",
@@ -156,7 +191,8 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
                 { name: "Jest", logo: "/tech-logos/Jest.webp" },
             ],
             platforms: [Chrome],
-        },        {
+        },
+        {
             title: "MoveIt",
             description: "Temporizador pomodoro gamificado. Desenvolvido em NextJS e Typescript durante o NLW 4.",
             imageSrc: "/MoveIt.webp",
