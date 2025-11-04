@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "postbuild": "ts-node src/scripts/generateSitemap.ts",
+    "build": "tsc -b && vite build && npm run build:sitemap",
+    "build:sitemap": "tsc --project tsconfig.scripts.json && node dist/scripts/generateSitemap.js",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
