@@ -30,7 +30,7 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
         setShowInfo(false);
     };
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, amount: 0.1 });
+    const isInView = useInView(ref, { once: true, amount: 0.01 });
 
     const containerVariants = {
         hidden: { opacity: 0 },
