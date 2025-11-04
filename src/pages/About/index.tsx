@@ -120,7 +120,6 @@ export function AboutPage({ theme }: AboutPageProps) {
                                 alt="laptop"
                                 className="max-h-screen-sm max-w-screen-sm lg:max-h-64 min-[320px]:max-h-56"
                                 beforeLoad={() => {
-                                    // Use cached image if available
                                     if (imageCache.has(LAPTOP_IMAGE_URL)) {
                                         setImageLoaded(true);
                                     }
