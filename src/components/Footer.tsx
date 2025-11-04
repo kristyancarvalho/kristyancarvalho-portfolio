@@ -8,8 +8,8 @@ interface FooterProps {
 
 const usefulLinks = [
     { title: 'Início', link: '/' },
-    { title: 'Sobre', link: '/about' },
-    { title: 'Projetos', link: '/projects' },
+    { title: 'Sobre', link: '/sobre' },
+    { title: 'Projetos', link: '/projetos' },
     { title: 'Posts', link: '/posts' },
 ];
 
