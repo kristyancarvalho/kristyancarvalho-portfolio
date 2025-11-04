@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Chrome, Info, Monitor, Smartphone, SquareTerminalIcon, X } from "lucide-react";
 import { ProjectCard } from "@/components/projectsCard";
@@ -17,6 +17,18 @@ const platformIcons: { [key: string]: React.ElementType } = {
 
 export function ProjectsPage({ theme }: ProjectsPageProps) {
     const [showInfo, setShowInfo] = useState(true);
+
+    useEffect(() => {
+        const infoClosed = localStorage.getItem("infoClosed");
+        if (infoClosed) {
+            setShowInfo(false);
+        }
+    }, []);
+
+    const handleCloseInfo = () => {
+        localStorage.setItem("infoClosed", "true");
+        setShowInfo(false);
+    };
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, amount: 0.1 });
 
@@ -77,7 +89,7 @@ export function ProjectsPage({ theme }: ProjectsPageProps) {
                             Clique no card para ver mais sobre o projeto.
                         </span>
                         <button 
-                            onClick={() => setShowInfo(false)}
+                            onClick={handleCloseInfo}
                             className={`absolute top-1 right-1 p-1 rounded-full ${theme === 'dark' ? 'bg-violet-400/20 text-violet-200 hover:bg-violet-400/30' : 'bg-violet-400/40 text-violet-950 hover:bg-violet-400/60'} transition-colors duration-200`}
                         >
                             <X size={14} />
