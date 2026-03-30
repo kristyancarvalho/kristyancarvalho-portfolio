@@ -1,24 +1,68 @@
 import { cn } from "@/shared/lib";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLbutton> {
   variant?: "primary" | "ghost" | "outline";
   size?: "sm" | "md" | "lg";
 }
 
-export function Button({ variant = "primary", size = "md", className, children, ...props }: ButtonProps) {
-  const base = "inline-flex items-center justify-center gap-2 font-mono transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:opacity-50 disabled:pointer-events-none";
-  const variants = {
-    primary: "bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)]",
-    ghost: "text-[var(--color-text)] hover:bg-[var(--color-surface)]",
-    outline: "border border-[var(--color-border)] text-[var(--color-text)] hover:bg-[var(--color-surface)]",
-  };
-  const sizes = {
-    sm: "text-xs px-3 py-1.5 rounded-[var(--radius-sm)]",
-    md: "text-sm px-4 py-2 rounded-[var(--radius-md)]",
-    lg: "text-sm px-6 py-3 rounded-[var(--radius-md)]",
-  };
+const sizeStyle: Record<string, React.CSSProperties> = {
+  sm: {
+    fontSize: "0.75rem",
+    padding: "0.25rem 0.625rem",
+    borderRadius: "var(--radius-sm)",
+  },
+  md: {
+    fontSize: "0.875rem",
+    padding: "0.5rem 1rem",
+    borderRadius: "var(--radius-md)",
+  },
+  lg: {
+    fontSize: "0.875rem",
+    padding: "0.75rem 1.5rem",
+    borderRadius: "var(--radius-md)",
+  },
+};
+
+const variantStyle: Record<string, React.CSSProperties> = {
+  primary: {
+    backgroundColor: "var(--color-accent)",
+    color: "white",
+    border: "none",
+  },
+  ghost: {
+    backgroundColor: "transparent",
+    color: "var(--color-text)",
+    border: "none",
+  },
+  outline: {
+    backgroundColor: "transparent",
+    color: "var(--color-text)",
+    border: "1px solid var(--color-text)",
+  },
+};
+
+export function Button({
+  variant = "primary",
+  size = "md",
+  className,
+  style,
+  children,
+  ...props
+}: ButtonProps) {
   return (
-    <button className={cn(base, variants[variant], sizes[size], className)} {...props}>
+    <button
+      className={cn(
+        "inline-flex items-center justify-center gap-2 font-mono transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:opacity-50 disabled:pointer-events-none",
+        className,
+      )}
+      style={{
+        cursor: "pointer",
+        ...sizeStyle[size],
+        ...variantStyle[variant],
+        ...style,
+      }}
+      {...props}
+    >
       {children}
     </button>
   );

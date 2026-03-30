@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPost, incrementViews } from "@/shared/lib";
 import { Skeleton } from "@/shared/ui";
@@ -29,23 +29,29 @@ export function PostPage({ t }: PostPageProps) {
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchPost = useCallback(async () => {
-    if (!id) return;
-    const data = await getPost(id);
-    if (data) {
-      if (!wasViewed(id)) {
-        await incrementViews(id);
-        markViewed(id);
-        data.views += 1;
-      }
-      setPost(data);
-    }
-    setLoading(false);
-  }, [id]);
-
   useEffect(() => {
-    fetchPost();
-  }, [fetchPost]);
+    if (!id) return;
+    let cancelled = false;
+
+    async function load() {
+      const data = await getPost(id!);
+      if (cancelled) return;
+      if (data) {
+        if (!wasViewed(id!)) {
+          await incrementViews(id!);
+          markViewed(id!);
+          data.views += 1;
+        }
+        setPost(data);
+      }
+      setLoading(false);
+    }
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
 
   return (
     <div
