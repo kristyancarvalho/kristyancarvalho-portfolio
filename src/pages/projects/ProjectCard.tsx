@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Project } from "@/entities/project";
 import type { Translations } from "@/shared/i18n";
+import { useScrollReveal } from "@/shared/hooks";
 
-const platformLabels: Record<string, string> = { web: "web", mobile: "mobile", desktop: "desktop", cli: "cli" };
+const platformLabels: Record<string, string> = {
+  web: "web",
+  mobile: "mobile",
+  desktop: "desktop",
+  cli: "cli",
+};
 
 interface ProjectCardProps {
   project: Project;
@@ -11,52 +17,294 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, t }: ProjectCardProps) {
   const [open, setOpen] = useState(false);
+  const ref = useScrollReveal();
+
+  useEffect(() => {
+    if (!open) return;
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [open]);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
 
   return (
     <>
       <article
+        ref={ref}
         onClick={() => setOpen(true)}
-        className="border border-[var(--color-border)] rounded-[var(--radius-md)] overflow-hidden cursor-pointer hover:border-[var(--color-accent)] transition-colors duration-150 group"
+        className="page-section card-glow"
         role="button"
         tabIndex={0}
         onKeyDown={e => e.key === "Enter" && setOpen(true)}
         aria-label={`Ver detalhes de ${project.title}`}
+        style={{
+          border: "1px solid var(--color-border)",
+          borderRadius: "var(--radius-xl)",
+          overflow: "hidden",
+          cursor: "pointer",
+          backgroundColor: "var(--color-surface)",
+        }}
       >
-        <div className="aspect-video overflow-hidden bg-[var(--color-surface)]">
-          <img src={project.imageSrc} alt={project.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" />
+        <div
+          style={{
+            aspectRatio: "16/9",
+            overflow: "hidden",
+            backgroundColor: "var(--color-surface2)",
+          }}
+        >
+          <img
+            src={project.imageSrc}
+            alt={project.title}
+            loading="lazy"
+            decoding="async"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transition: "transform 0.3s ease",
+            }}
+            onMouseEnter={e => ((e.target as HTMLElement).style.transform = "scale(1.03)")}
+            onMouseLeave={e => ((e.target as HTMLElement).style.transform = "scale(1)")}
+          />
         </div>
-        <div className="p-4">
-          <div className="flex items-start justify-between gap-2 mb-2">
-            <h2 className="font-mono text-sm font-bold text-[var(--color-text)]">{project.title}</h2>
-            <div className="flex gap-1 flex-shrink-0">
+        <div style={{ padding: "1.1rem" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+              gap: "0.5rem",
+              marginBottom: "0.5rem",
+            }}
+          >
+            <h2
+              style={{
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                color: "var(--color-text)",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              {project.title}
+            </h2>
+            <div style={{ display: "flex", gap: "0.3rem", flexShrink: 0 }}>
               {project.platforms.map(p => (
-                <span key={p} className="font-mono text-[10px] text-[var(--color-muted)] border border-[var(--color-border)] px-1.5 py-0.5 rounded-[var(--radius-sm)]">{platformLabels[p]}</span>
+                <span
+                  key={p}
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.65rem",
+                    color: "var(--color-muted)",
+                    border: "1px solid var(--color-border)",
+                    padding: "0.15rem 0.4rem",
+                    borderRadius: "var(--radius-xs)",
+                    backgroundColor: "var(--color-surface2)",
+                  }}
+                >
+                  {platformLabels[p]}
+                </span>
               ))}
             </div>
           </div>
-          <p className="font-mono text-xs text-[var(--color-muted)] leading-relaxed line-clamp-2">{project.description}</p>
+          <p
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.72rem",
+              color: "var(--color-muted)",
+              lineHeight: 1.6,
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
+          >
+            {project.description}
+          </p>
         </div>
       </article>
+
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70" onClick={() => setOpen(false)} role="dialog" aria-modal="true" aria-label={project.title}>
-          <div className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[var(--radius-lg)] w-full max-w-xl max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-            <img src={project.imageSrc} alt={project.title} className="w-full aspect-video object-cover rounded-t-[var(--radius-lg)]" />
-            <div className="p-6">
-              <div className="flex items-start justify-between gap-4 mb-4">
-                <h2 className="font-mono text-base font-bold text-[var(--color-text)]">{project.title}</h2>
-                <button onClick={() => setOpen(false)} aria-label="Fechar" className="font-mono text-xs text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors">[esc]</button>
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 100,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "1rem",
+            backgroundColor: "rgb(0 0 0 / 0.65)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            animation: "fadeIn 0.15s ease forwards",
+          }}
+          onClick={() => setOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={project.title}
+        >
+          <div
+            style={{
+              backgroundColor: "var(--color-bg)",
+              border: "1px solid var(--color-border)",
+              borderRadius: "var(--radius-2xl)",
+              width: "100%",
+              maxWidth: "36rem",
+              maxHeight: "88vh",
+              overflowY: "auto",
+              boxShadow: "0 0 40px var(--color-accent-dim), 0 20px 60px rgb(0 0 0 / 0.3)",
+              animation: "fadeUp 0.2s ease forwards",
+            }}
+            onClick={e => e.stopPropagation()}
+          >
+            <img
+              src={project.imageSrc}
+              alt={project.title}
+              style={{
+                width: "100%",
+                aspectRatio: "16/9",
+                objectFit: "cover",
+                borderRadius: "var(--radius-2xl) var(--radius-2xl) 0 0",
+              }}
+            />
+            <div style={{ padding: "1.5rem" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  justifyContent: "space-between",
+                  gap: "1rem",
+                  marginBottom: "1rem",
+                }}
+              >
+                <h2
+                  style={{
+                    fontSize: "1.1rem",
+                    fontWeight: 600,
+                    color: "var(--color-text)",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  {project.title}
+                </h2>
+                <button
+                  onClick={() => setOpen(false)}
+                  aria-label="Fechar"
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.7rem",
+                    color: "var(--color-muted)",
+                    background: "none",
+                    border: "1px solid var(--color-border)",
+                    borderRadius: "var(--radius-sm)",
+                    padding: "0.2rem 0.5rem",
+                    cursor: "pointer",
+                    flexShrink: 0,
+                    transition: "color 0.15s ease, border-color 0.15s ease",
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.color = "var(--color-text)";
+                    (e.currentTarget as HTMLElement).style.borderColor = "var(--color-text)";
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.color = "var(--color-muted)";
+                    (e.currentTarget as HTMLElement).style.borderColor = "var(--color-border)";
+                  }}
+                >
+                  esc
+                </button>
               </div>
-              <p className="font-mono text-xs text-[var(--color-muted)] leading-relaxed mb-6">{project.detailedDescription}</p>
-              <p className="font-mono text-xs text-[var(--color-text)] mb-3">{t.projects.techUsed}</p>
-              <div className="flex flex-wrap gap-3 mb-6">
+
+              <p
+                style={{
+                  fontSize: "0.8rem",
+                  color: "var(--color-muted)",
+                  lineHeight: 1.75,
+                  marginBottom: "1.5rem",
+                }}
+              >
+                {project.detailedDescription}
+              </p>
+
+              <p
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.7rem",
+                  color: "var(--color-text)",
+                  marginBottom: "0.75rem",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                {t.projects.techUsed}
+              </p>
+
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginBottom: "1.5rem" }}>
                 {project.technologies.map(tech => (
-                  <div key={tech.name} className="flex items-center gap-1.5">
-                    <img src={tech.logo} alt={tech.name} className="w-4 h-4 object-contain" loading="lazy" />
-                    <span className="font-mono text-xs text-[var(--color-muted)]">{tech.name}</span>
+                  <div
+                    key={tech.name}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.375rem",
+                      padding: "0.3rem 0.6rem",
+                      border: "1px solid var(--color-border)",
+                      borderRadius: "var(--radius-md)",
+                      backgroundColor: "var(--color-surface)",
+                    }}
+                  >
+                    <img
+                      src={tech.logo}
+                      alt={tech.name}
+                      style={{ width: "14px", height: "14px", objectFit: "contain" }}
+                      loading="lazy"
+                    />
+                    <span
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.7rem",
+                        color: "var(--color-muted)",
+                      }}
+                    >
+                      {tech.name}
+                    </span>
                   </div>
                 ))}
               </div>
-              <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-[var(--color-accent)] hover:underline">{t.projects.github} →</a>
+
+              <a
+                href={project.githubLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.375rem",
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.75rem",
+                  color: "var(--color-accent)",
+                  textDecoration: "none",
+                  padding: "0.5rem 1rem",
+                  border: "1px solid var(--color-accent-dim)",
+                  borderRadius: "var(--radius-md)",
+                  backgroundColor: "var(--color-accent-dim)",
+                  transition: "background-color 0.15s ease, box-shadow 0.15s ease",
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 0 12px var(--color-accent-dim)";
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                }}
+              >
+                {t.projects.github}
+                <span aria-hidden="true">→</span>
+              </a>
             </div>
           </div>
         </div>

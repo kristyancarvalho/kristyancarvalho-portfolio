@@ -1,3 +1,4 @@
+import { useScrollReveal } from "@/shared/hooks";
 import type { Translations } from "@/shared/i18n";
 
 const technologies = {
@@ -20,187 +21,274 @@ const technologies = {
   },
 };
 
+interface TechCardProps {
+  title: string;
+  rows: { key: string; value: string }[];
+  color?: string;
+}
+
+function TechCard({ title, rows, color }: TechCardProps) {
+  const ref = useScrollReveal();
+  return (
+    <div
+      ref={ref}
+      className="page-section card-glow"
+      style={{
+        border: "1px solid var(--color-border)",
+        borderRadius: "var(--radius-xl)",
+        padding: "1.5rem",
+        backgroundColor: "var(--color-surface)",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          width: "80px",
+          height: "80px",
+          borderRadius: "50%",
+          background: `radial-gradient(circle, ${color ?? "var(--color-accent-dim)"} 0%, transparent 70%)`,
+          filter: "blur(20px)",
+          pointerEvents: "none",
+        }}
+      />
+      <p
+        style={{
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.7rem",
+          color: "var(--color-accent)",
+          letterSpacing: "0.06em",
+          textTransform: "uppercase",
+          marginBottom: "1rem",
+        }}
+      >
+        {title}
+      </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        {rows.map(({ key, value }) => (
+          <div key={key} style={{ display: "flex", gap: "0.5rem" }}>
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.72rem",
+                color: "var(--color-text)",
+                minWidth: "3.5rem",
+                flexShrink: 0,
+              }}
+            >
+              {key}
+            </span>
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.72rem",
+                color: "var(--color-muted)",
+              }}
+            >
+              {value}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 interface AboutPageProps {
   t: Translations;
 }
 
 export function AboutPage({ t }: AboutPageProps) {
+  const titleRef = useScrollReveal();
+  const bioRef = useScrollReveal();
+  const journeyRef = useScrollReveal();
+  const interestsRef = useScrollReveal();
+  const techTitleRef = useScrollReveal();
+
   return (
-    <div
-      style={{ marginTop: "3rem", paddingTop: "4rem", paddingBottom: "4rem" }}
-    >
+    <div style={{ marginTop: "3.25rem", paddingTop: "4rem", paddingBottom: "5rem" }}>
       <div className="wrap">
-        <h1
-          className="font-mono text-2xl text-[var(--color-text)]"
-          style={{ marginBottom: "2.5rem" }}
-        >
-          <span className="text-[var(--color-accent)]">&gt;</span>{" "}
-          {t.about.title}
-        </h1>
-        <section
+        <div ref={titleRef} className="page-section" style={{ marginBottom: "3rem" }}>
+          <p
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.7rem",
+              color: "var(--color-accent)",
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              marginBottom: "0.75rem",
+            }}
+          >
+            {t.about.title}
+          </p>
+          <h1
+            style={{
+              fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
+              fontWeight: 600,
+              letterSpacing: "-0.03em",
+              color: "var(--color-text)",
+            }}
+          >
+            Kristyan Carvalho
+          </h1>
+        </div>
+
+        <div
           style={{
-            marginBottom: "3rem",
-            display: "flex",
-            flexDirection: "column",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "1.25rem",
+            marginBottom: "3.5rem",
+          }}
+        >
+          <div
+            ref={bioRef}
+            className="page-section card-glow"
+            style={{
+              border: "1px solid var(--color-border)",
+              borderRadius: "var(--radius-xl)",
+              padding: "1.5rem",
+              backgroundColor: "var(--color-surface)",
+            }}
+          >
+            <p
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.7rem",
+                color: "var(--color-accent)",
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                marginBottom: "0.75rem",
+              }}
+            >
+              bio
+            </p>
+            <p style={{ fontSize: "0.875rem", color: "var(--color-muted)", lineHeight: 1.75 }}>
+              {t.about.bio}
+            </p>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <div
+              ref={journeyRef}
+              className="page-section card-glow"
+              style={{
+                border: "1px solid var(--color-border)",
+                borderRadius: "var(--radius-xl)",
+                padding: "1.5rem",
+                backgroundColor: "var(--color-surface)",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.7rem",
+                  color: "var(--color-accent)",
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                {t.about.journey}
+              </p>
+              <p style={{ fontSize: "0.875rem", color: "var(--color-muted)", lineHeight: 1.7 }}>
+                {t.about.journeyText}
+              </p>
+            </div>
+
+            <div
+              ref={interestsRef}
+              className="page-section card-glow"
+              style={{
+                border: "1px solid var(--color-border)",
+                borderRadius: "var(--radius-xl)",
+                padding: "1.5rem",
+                backgroundColor: "var(--color-surface)",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.7rem",
+                  color: "var(--color-accent)",
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                {t.about.interests}
+              </p>
+              <p style={{ fontSize: "0.875rem", color: "var(--color-muted)", lineHeight: 1.7 }}>
+                {t.about.interestsText}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div ref={techTitleRef} className="page-section" style={{ marginBottom: "1.5rem" }}>
+          <p
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.7rem",
+              color: "var(--color-accent)",
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              marginBottom: "0.5rem",
+            }}
+          >
+            {t.about.techTitle}
+          </p>
+          <h2
+            style={{
+              fontSize: "1.25rem",
+              fontWeight: 600,
+              letterSpacing: "-0.025em",
+              color: "var(--color-text)",
+            }}
+          >
+            Stack
+          </h2>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
             gap: "1rem",
           }}
         >
-          <p className="font-mono text-sm text-[var(--color-muted)] leading-relaxed">
-            {t.about.bio}
-          </p>
-          <div>
-            <p
-              className="font-mono text-xs text-[var(--color-accent)]"
-              style={{ marginBottom: "0.5rem" }}
-            >
-              // {t.about.journey}
-            </p>
-            <p className="font-mono text-sm text-[var(--color-muted)] leading-relaxed">
-              {t.about.journeyText}
-            </p>
-          </div>
-          <div>
-            <p
-              className="font-mono text-xs text-[var(--color-accent)]"
-              style={{ marginBottom: "0.5rem" }}
-            >
-              // {t.about.interests}
-            </p>
-            <p className="font-mono text-sm text-[var(--color-muted)] leading-relaxed">
-              {t.about.interestsText}
-            </p>
-          </div>
-        </section>
-        <section>
-          <h2
-            className="font-mono text-lg text-[var(--color-text)]"
-            style={{ marginBottom: "1.5rem" }}
-          >
-            <span className="text-[var(--color-accent)]">&gt;</span>{" "}
-            {t.about.techTitle}
-          </h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-              gap: "1.5rem",
-            }}
-          >
-            <div
-              style={{
-                border: "1px solid var(--color-border)",
-                borderRadius: "var(--radius-md)",
-                padding: "1rem",
-              }}
-            >
-              <p
-                className="font-mono text-xs text-[var(--color-accent)]"
-                style={{ marginBottom: "0.75rem" }}
-              >
-                {t.about.frontend}
-              </p>
-              <div
-                className="font-mono text-xs text-[var(--color-muted)]"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.375rem",
-                }}
-              >
-                <p>
-                  <span className="text-[var(--color-text)]">lang</span>:{" "}
-                  {technologies.frontend.languages}
-                </p>
-                <p>
-                  <span className="text-[var(--color-text)]">libs</span>:{" "}
-                  {technologies.frontend.frameworks}
-                </p>
-                <p>
-                  <span className="text-[var(--color-text)]">css</span>:{" "}
-                  {technologies.frontend.styling}
-                </p>
-              </div>
-            </div>
-            <div
-              style={{
-                border: "1px solid var(--color-border)",
-                borderRadius: "var(--radius-md)",
-                padding: "1rem",
-              }}
-            >
-              <p
-                className="font-mono text-xs text-[var(--color-accent)]"
-                style={{ marginBottom: "0.75rem" }}
-              >
-                {t.about.backend}
-              </p>
-              <div
-                className="font-mono text-xs text-[var(--color-muted)]"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.375rem",
-                }}
-              >
-                <p>
-                  <span className="text-[var(--color-text)]">lang</span>:{" "}
-                  {technologies.backend.languages}
-                </p>
-                <p>
-                  <span className="text-[var(--color-text)]">libs</span>:{" "}
-                  {technologies.backend.frameworks}
-                </p>
-                <p>
-                  <span className="text-[var(--color-text)]">db</span>:{" "}
-                  {technologies.backend.databases}
-                </p>
-              </div>
-            </div>
-            <div
-              style={{
-                border: "1px solid var(--color-border)",
-                borderRadius: "var(--radius-md)",
-                padding: "1rem",
-              }}
-            >
-              <p
-                className="font-mono text-xs text-[var(--color-accent)]"
-                style={{ marginBottom: "0.75rem" }}
-              >
-                {t.about.tools}
-              </p>
-              <div
-                className="font-mono text-xs text-[var(--color-muted)]"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.375rem",
-                }}
-              >
-                <p>
-                  <span className="text-[var(--color-text)]">vcs</span>:{" "}
-                  {technologies.tools.vcs}
-                </p>
-                <p>
-                  <span className="text-[var(--color-text)]">ci/cd</span>:{" "}
-                  {technologies.tools.cicd}
-                </p>
-                <p>
-                  <span className="text-[var(--color-text)]">orm</span>:{" "}
-                  {technologies.tools.orm}
-                </p>
-                <p>
-                  <span className="text-[var(--color-text)]">test</span>:{" "}
-                  {technologies.tools.testing}
-                </p>
-                <p>
-                  <span className="text-[var(--color-text)]">infra</span>:{" "}
-                  {technologies.tools.containers}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <TechCard
+            title={t.about.frontend}
+            rows={[
+              { key: "lang", value: technologies.frontend.languages },
+              { key: "libs", value: technologies.frontend.frameworks },
+              { key: "css", value: technologies.frontend.styling },
+            ]}
+          />
+          <TechCard
+            title={t.about.backend}
+            color="var(--color-accent2-dim)"
+            rows={[
+              { key: "lang", value: technologies.backend.languages },
+              { key: "libs", value: technologies.backend.frameworks },
+              { key: "db", value: technologies.backend.databases },
+            ]}
+          />
+          <TechCard
+            title={t.about.tools}
+            rows={[
+              { key: "vcs", value: technologies.tools.vcs },
+              { key: "ci/cd", value: technologies.tools.cicd },
+              { key: "orm", value: technologies.tools.orm },
+              { key: "test", value: technologies.tools.testing },
+              { key: "infra", value: technologies.tools.containers },
+            ]}
+          />
+        </div>
       </div>
     </div>
   );

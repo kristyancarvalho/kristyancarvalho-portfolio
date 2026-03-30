@@ -3,7 +3,7 @@ import { ThemeSwitch } from "@/widgets/theme-switch";
 import { LanguageSwitch } from "@/widgets/language-switch";
 import type { Theme, Locale } from "@/shared/types";
 import type { Translations } from "@/shared/i18n";
-import { useState } from "react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { profile } from "@/entities/profile";
 
 interface HeaderProps {
@@ -12,6 +12,11 @@ interface HeaderProps {
   locale: Locale;
   onChangeLocale: (l: Locale) => void;
   t: Translations;
+}
+
+interface TabRect {
+  left: number;
+  width: number;
 }
 
 export function Header({
@@ -23,6 +28,9 @@ export function Header({
 }: HeaderProps) {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
+  const [tabRect, setTabRect] = useState<TabRect | null>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const linkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
 
   const links = [
     { label: t.nav.home, to: "/" },
@@ -33,6 +41,39 @@ export function Header({
 
   const isPostActive = pathname.startsWith("/post/");
 
+  function getActiveKey(): string {
+    if (pathname === "/") return "/";
+    if (pathname.startsWith("/sobre")) return "/sobre";
+    if (pathname.startsWith("/projetos")) return "/projetos";
+    if (pathname.startsWith("/posts") || isPostActive) return "/posts";
+    return "";
+  }
+
+  useLayoutEffect(() => {
+    const activeKey = getActiveKey();
+    const el = linkRefs.current.get(activeKey);
+    const nav = navRef.current;
+    if (!el || !nav) {
+      setTabRect(null);
+      return;
+    }
+    const navRect = nav.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    setTabRect({
+      left: elRect.left - navRect.left,
+      width: elRect.width,
+    });
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [open]);
+
   return (
     <header
       style={{
@@ -41,74 +82,170 @@ export function Header({
         left: 0,
         right: 0,
         zIndex: 50,
-        borderBottom: "1px solid var(--color-border)",
-        backgroundColor: "var(--color-bg)",
       }}
     >
       <div
-        className="wrap"
         style={{
-          height: "3rem",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
+          borderBottom: "1px solid var(--color-border)",
+          backgroundColor: "color-mix(in oklch, var(--color-bg) 85%, transparent)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
         }}
       >
-        <NavLink
-          to="/"
-          className="font-mono text-sm text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors duration-150"
+        <div
+          className="wrap"
+          style={{
+            height: "3.25rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
-          [kristyan<span className="text-[var(--color-accent)]">.dev</span>]
-        </NavLink>
-        <nav
-          className="hidden sm:flex items-center gap-1"
-          aria-label="Navegação principal"
-        >
-          {links.map(({ label, to }) => (
-            <NavLink
-              key={to}
-              to={to}
-              className={({ isActive }) => {
-                const active = isActive || (to === "/posts" && isPostActive);
-                return [
-                  "font-mono text-xs px-3 py-1.5 rounded-[var(--radius-sm)] transition-colors duration-150",
-                  active
-                    ? "text-[var(--color-accent)]"
-                    : "text-[var(--color-muted)] hover:text-[var(--color-text)]",
-                ].join(" ");
-              }}
-            >
-              {label}
-            </NavLink>
-          ))}
-        </nav>
-        <div className="flex items-center gap-2">
-          <LanguageSwitch locale={locale} onChange={onChangeLocale} />
-          <ThemeSwitch theme={theme} onToggle={onToggleTheme} />
-          <button
-            className="sm:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 text-[var(--color-muted)]"
-            aria-label={open ? "Fechar menu" : "Abrir menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((o) => !o)}
+          <NavLink
+            to="/"
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.8rem",
+              fontWeight: 500,
+              color: "var(--color-text)",
+              textDecoration: "none",
+              letterSpacing: "-0.01em",
+              transition: "color 0.15s ease",
+            }}
+            onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-accent)")}
+            onMouseLeave={e => ((e.target as HTMLElement).style.color = "var(--color-text)")}
           >
-            <span
-              className={`block w-4 h-px bg-current transition-transform duration-150 ${open ? "rotate-45 translate-y-[3px]" : ""}`}
-            />
-            <span
-              className={`block w-4 h-px bg-current transition-opacity duration-150 ${open ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`block w-4 h-px bg-current transition-transform duration-150 ${open ? "-rotate-45 -translate-y-[3px]" : ""}`}
-            />
-          </button>
+            kristyan
+            <span style={{ color: "var(--color-accent)" }}>.dev</span>
+          </NavLink>
+
+          <nav
+            ref={navRef}
+            className="hidden sm:flex items-center"
+            aria-label="Navegação principal"
+            style={{
+              position: "relative",
+              padding: "0.2rem",
+              border: "1px solid var(--color-border)",
+              borderRadius: "var(--radius-lg)",
+              backgroundColor: "var(--color-surface)",
+              gap: "0",
+            }}
+          >
+            {tabRect && (
+              <span
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  top: "0.2rem",
+                  bottom: "0.2rem",
+                  left: tabRect.left,
+                  width: tabRect.width,
+                  borderRadius: "calc(var(--radius-lg) - 0.2rem)",
+                  backgroundColor: "var(--color-bg)",
+                  border: "1px solid var(--color-border)",
+                  boxShadow: "0 0 12px var(--color-accent-dim), 0 1px 4px rgb(0 0 0 / 0.08)",
+                  transition: "left 0.25s cubic-bezier(0.4, 0, 0.2, 1), width 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
+                  pointerEvents: "none",
+                  zIndex: 0,
+                }}
+              />
+            )}
+            {links.map(({ label, to }) => {
+              const activeKey = getActiveKey();
+              const isActive = to === activeKey;
+              return (
+                <NavLink
+                  key={to}
+                  to={to}
+                  ref={el => {
+                    if (el) linkRefs.current.set(to, el);
+                    else linkRefs.current.delete(to);
+                  }}
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.72rem",
+                    padding: "0.35rem 0.75rem",
+                    borderRadius: "calc(var(--radius-lg) - 0.2rem)",
+                    transition: "color 0.15s ease",
+                    textDecoration: "none",
+                    position: "relative",
+                    zIndex: 1,
+                    color: isActive ? "var(--color-text)" : "var(--color-muted)",
+                    fontWeight: isActive ? 500 : 400,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {label}
+                </NavLink>
+              );
+            })}
+          </nav>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <LanguageSwitch locale={locale} onChange={onChangeLocale} />
+            <ThemeSwitch theme={theme} onToggle={onToggleTheme} />
+            <button
+              className="sm:hidden"
+              style={{
+                width: "2rem",
+                height: "2rem",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "5px",
+                color: "var(--color-muted)",
+                background: "none",
+                border: "none",
+              }}
+              aria-label={open ? "Fechar menu" : "Abrir menu"}
+              aria-expanded={open}
+              onClick={() => setOpen(o => !o)}
+            >
+              <span
+                style={{
+                  display: "block",
+                  width: "16px",
+                  height: "1px",
+                  background: "currentColor",
+                  transition: "transform 0.15s ease",
+                  transform: open ? "rotate(45deg) translateY(3px)" : "none",
+                }}
+              />
+              <span
+                style={{
+                  display: "block",
+                  width: "16px",
+                  height: "1px",
+                  background: "currentColor",
+                  transition: "opacity 0.15s ease",
+                  opacity: open ? 0 : 1,
+                }}
+              />
+              <span
+                style={{
+                  display: "block",
+                  width: "16px",
+                  height: "1px",
+                  background: "currentColor",
+                  transition: "transform 0.15s ease",
+                  transform: open ? "rotate(-45deg) translateY(-3px)" : "none",
+                }}
+              />
+            </button>
+          </div>
         </div>
       </div>
+
       {open && (
         <nav
           className="sm:hidden"
           style={{
-            borderTop: "1px solid var(--color-border)",
-            backgroundColor: "var(--color-bg)",
+            borderBottom: "1px solid var(--color-border)",
+            backgroundColor: "color-mix(in oklch, var(--color-bg) 95%, transparent)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
           }}
           aria-label="Navegação mobile"
         >
@@ -119,27 +256,33 @@ export function Header({
               paddingBottom: "0.75rem",
               display: "flex",
               flexDirection: "column",
-              gap: "0.25rem",
+              gap: "0.125rem",
             }}
           >
-            {links.map(({ label, to }) => (
-              <NavLink
-                key={to}
-                to={to}
-                onClick={() => setOpen(false)}
-                className={({ isActive }) => {
-                  const active = isActive || (to === "/posts" && isPostActive);
-                  return [
-                    "font-mono text-sm px-3 py-2 rounded-[var(--radius-md)] transition-colors duration-150",
-                    active
-                      ? "text-[var(--color-accent)] bg-[var(--color-surface)]"
-                      : "text-[var(--color-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface)]",
-                  ].join(" ");
-                }}
-              >
-                {label}
-              </NavLink>
-            ))}
+            {links.map(({ label, to }) => {
+              const activeKey = getActiveKey();
+              const isActive = to === activeKey;
+              return (
+                <NavLink
+                  key={to}
+                  to={to}
+                  onClick={() => setOpen(false)}
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.8rem",
+                    padding: "0.6rem 0.75rem",
+                    borderRadius: "var(--radius-md)",
+                    textDecoration: "none",
+                    transition: "background-color 0.15s ease, color 0.15s ease",
+                    color: isActive ? "var(--color-accent)" : "var(--color-muted)",
+                    backgroundColor: isActive ? "var(--color-surface)" : "transparent",
+                    fontWeight: isActive ? 500 : 400,
+                  }}
+                >
+                  {label}
+                </NavLink>
+              );
+            })}
             <div
               style={{
                 paddingTop: "0.5rem",
@@ -147,7 +290,7 @@ export function Header({
                 borderTop: "1px solid var(--color-border)",
                 display: "flex",
                 alignItems: "center",
-                gap: "0.75rem",
+                gap: "1rem",
                 paddingLeft: "0.75rem",
               }}
             >
@@ -155,17 +298,33 @@ export function Header({
                 href={profile.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-xs text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors"
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.72rem",
+                  color: "var(--color-muted)",
+                  textDecoration: "none",
+                  transition: "color 0.15s ease",
+                }}
+                onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-text)")}
+                onMouseLeave={e => ((e.target as HTMLElement).style.color = "var(--color-muted)")}
               >
-                gh
+                github
               </a>
               <a
                 href={profile.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-xs text-[var(--color-muted)] hover:text-[var(--color-text)] transition-colors"
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.72rem",
+                  color: "var(--color-muted)",
+                  textDecoration: "none",
+                  transition: "color 0.15s ease",
+                }}
+                onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-text)")}
+                onMouseLeave={e => ((e.target as HTMLElement).style.color = "var(--color-muted)")}
               >
-                ig
+                instagram
               </a>
             </div>
           </div>
