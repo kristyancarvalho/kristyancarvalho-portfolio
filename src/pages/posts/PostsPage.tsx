@@ -40,7 +40,7 @@ function PostCardSkeleton() {
 }
 
 function PostCard({ post, isMostViewed, t }: { post: Post; isMostViewed: boolean; t: Translations }) {
-  const ref = useScrollReveal();
+  const ref = useScrollReveal<HTMLAnchorElement>();
 
   return (
     <Link

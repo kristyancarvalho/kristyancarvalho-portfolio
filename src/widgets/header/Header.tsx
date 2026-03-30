@@ -3,7 +3,7 @@ import { ThemeSwitch } from "@/widgets/theme-switch";
 import { LanguageSwitch } from "@/widgets/language-switch";
 import type { Theme, Locale } from "@/shared/types";
 import type { Translations } from "@/shared/i18n";
-import { useState, useRef, useEffect, useLayoutEffect } from "react";
+import { useState, useRef, useEffect, useLayoutEffect, useCallback } from "react";
 import { profile } from "@/entities/profile";
 
 interface HeaderProps {
@@ -39,31 +39,38 @@ export function Header({
     { label: t.nav.posts, to: "/posts" },
   ];
 
-  const isPostActive = pathname.startsWith("/post/");
-
-  function getActiveKey(): string {
+  const getActiveKey = useCallback((): string => {
+    const isPostActive = pathname.startsWith("/post/");
     if (pathname === "/") return "/";
     if (pathname.startsWith("/sobre")) return "/sobre";
     if (pathname.startsWith("/projetos")) return "/projetos";
     if (pathname.startsWith("/posts") || isPostActive) return "/posts";
     return "";
-  }
+  }, [pathname]);
 
   useLayoutEffect(() => {
     const activeKey = getActiveKey();
     const el = linkRefs.current.get(activeKey);
     const nav = navRef.current;
-    if (!el || !nav) {
-      setTabRect(null);
-      return;
-    }
-    const navRect = nav.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
-    setTabRect({
-      left: elRect.left - navRect.left,
-      width: elRect.width,
+
+    const frame = requestAnimationFrame(() => {
+      if (!el || !nav) {
+        setTabRect(prev => (prev === null ? null : null));
+        return;
+      }
+      const navRect = nav.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      const next = {
+        left: elRect.left - navRect.left,
+        width: elRect.width,
+      };
+      setTabRect(prev => 
+        prev?.left === next.left && prev?.width === next.width ? prev : next
+      );
     });
-  }, [pathname]);
+
+    return () => cancelAnimationFrame(frame);
+  }, [pathname, getActiveKey]);
 
   useEffect(() => {
     if (!open) return;

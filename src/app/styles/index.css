@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap");
+@import "tailwindcss";
 
 @theme {
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
