@@ -12,8 +12,6 @@ dist
 dist-ssr
 *.local
 
-.env
-blof-e8566-firebase-adminsdk-zzdib-3f122c2da1.json
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -24,5 +22,5 @@ blof-e8566-firebase-adminsdk-zzdib-3f122c2da1.json
 *.njsproj
 *.sln
 *.sw?
-.vercel
+
 spec.txt
