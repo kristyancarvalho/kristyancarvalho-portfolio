@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://kristyan.dev/</loc>
+    
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://kristyan.dev/projetos</loc>
+    
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://kristyan.dev/sobre</loc>
+    
+    <priority>0.6</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://kristyan.dev/posts</loc>
+    
+    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://kristyan.dev/post/BiGC6ml3EDtl7sIg2Jj7</loc>
+    <lastmod>2024-09-03T00:39:47.199Z</lastmod>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://kristyan.dev/post/BiXq1a9rEsXB1rCPrukT</loc>
+    <lastmod>2024-10-01T02:58:49.090Z</lastmod>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://kristyan.dev/post/CindnaLftnGFJRdKHg9j</loc>
+    <lastmod>2024-10-02T01:22:25.605Z</lastmod>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://kristyan.dev/post/N2iicnIIl09FD2I4aAaM</loc>
+    <lastmod>2025-01-03T23:30:29.028Z</lastmod>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://kristyan.dev/post/WcQQZ4WJ2EmaULyllIem</loc>
+    <lastmod>2024-09-02T21:11:31.995Z</lastmod>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://kristyan.dev/post/XgkK5PQotKrb6GC4B9GZ</loc>
+    <lastmod>2025-01-03T23:35:15.333Z</lastmod>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://kristyan.dev/post/bAKM84m7j0bIMK7cVVs6</loc>
+    <lastmod>2024-09-02T20:10:56.978Z</lastmod>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://kristyan.dev/post/z8Zx9RgMm1SPmre7XrNy</loc>
+    <lastmod>2024-09-03T00:44:31.837Z</lastmod>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+</urlset>
