@@ -11,8 +11,8 @@ export function ThemeSwitch({ theme, onToggle }: ThemeSwitchProps) {
       onClick={onToggle}
       aria-label={theme === "dark" ? "Ativar tema claro" : "Ativar tema escuro"}
       style={{
-        width: "2rem",
-        height: "2rem",
+        width: "2.25rem",
+        height: "2.25rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -21,19 +21,23 @@ export function ThemeSwitch({ theme, onToggle }: ThemeSwitchProps) {
         backgroundColor: "var(--color-surface)",
         color: "var(--color-muted)",
         cursor: "pointer",
-        transition: "border-color 0.15s ease, color 0.15s ease",
-        fontSize: "0.875rem",
+        transition: "border-color 0.15s ease, color 0.15s ease, transform 0.15s ease",
+        fontSize: "0.95rem",
       }}
       onMouseEnter={e => {
-        (e.currentTarget as HTMLElement).style.borderColor = "var(--color-primary)";
-        (e.currentTarget as HTMLElement).style.color = "var(--color-primary)";
+        const el = e.currentTarget;
+        el.style.borderColor = "var(--color-primary)";
+        el.style.color = "var(--color-primary)";
+        el.style.transform = "rotate(12deg)";
       }}
       onMouseLeave={e => {
-        (e.currentTarget as HTMLElement).style.borderColor = "var(--color-border)";
-        (e.currentTarget as HTMLElement).style.color = "var(--color-muted)";
+        const el = e.currentTarget;
+        el.style.borderColor = "var(--color-border)";
+        el.style.color = "var(--color-muted)";
+        el.style.transform = "";
       }}
     >
-      {theme === "dark" ? "☀" : "◐"}
+      {theme === "dark" ? "☀" : "◑"}
     </button>
   );
 }

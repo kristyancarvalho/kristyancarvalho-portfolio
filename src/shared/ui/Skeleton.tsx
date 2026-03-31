@@ -10,7 +10,7 @@ export function Skeleton({ className, style }: SkeletonProps) {
     <div
       className={cn("skeleton-shimmer", className)}
       style={{
-        borderRadius: "var(--radius-md)",
+        borderRadius: "var(--radius-lg)",
         ...style,
       }}
     />

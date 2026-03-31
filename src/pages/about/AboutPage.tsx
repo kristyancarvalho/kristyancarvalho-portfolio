@@ -24,20 +24,18 @@ const technologies = {
 interface TechCardProps {
   title: string;
   rows: { key: string; value: string }[];
-  color?: string;
+  accentColor?: string;
 }
 
-function TechCard({ title, rows, color }: TechCardProps) {
+function TechCard({ title, rows, accentColor }: TechCardProps) {
   const ref = useScrollReveal();
+  const color = accentColor ?? "var(--color-accent-dim)";
   return (
     <div
       ref={ref}
-      className="page-section card-glow"
+      className="page-section card-surface"
       style={{
-        border: "1px solid var(--color-border)",
-        borderRadius: "var(--radius-xl)",
         padding: "1.5rem",
-        backgroundColor: "var(--color-surface)",
         position: "relative",
         overflow: "hidden",
       }}
@@ -48,36 +46,26 @@ function TechCard({ title, rows, color }: TechCardProps) {
           position: "absolute",
           top: 0,
           right: 0,
-          width: "80px",
-          height: "80px",
+          width: "100px",
+          height: "100px",
           borderRadius: "50%",
-          background: `radial-gradient(circle, ${color ?? "var(--color-accent-dim)"} 0%, transparent 70%)`,
-          filter: "blur(20px)",
+          background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
+          filter: "blur(24px)",
           pointerEvents: "none",
         }}
       />
-      <p
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.7rem",
-          color: "var(--color-accent)",
-          letterSpacing: "0.06em",
-          textTransform: "uppercase",
-          marginBottom: "1rem",
-        }}
-      >
-        {title}
-      </p>
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+      <p className="label-tag" style={{ marginBottom: "1.25rem" }}>{title}</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
         {rows.map(({ key, value }) => (
-          <div key={key} style={{ display: "flex", gap: "0.5rem" }}>
+          <div key={key} style={{ display: "flex", gap: "0.75rem" }}>
             <span
               style={{
                 fontFamily: "var(--font-mono)",
-                fontSize: "0.72rem",
+                fontSize: "0.7rem",
                 color: "var(--color-text)",
-                minWidth: "3.5rem",
+                minWidth: "3.75rem",
                 flexShrink: 0,
+                fontWeight: 500,
               }}
             >
               {key}
@@ -85,8 +73,9 @@ function TechCard({ title, rows, color }: TechCardProps) {
             <span
               style={{
                 fontFamily: "var(--font-mono)",
-                fontSize: "0.72rem",
+                fontSize: "0.7rem",
                 color: "var(--color-muted)",
+                lineHeight: 1.6,
               }}
             >
               {value}
@@ -110,27 +99,19 @@ export function AboutPage({ t }: AboutPageProps) {
   const techTitleRef = useScrollReveal();
 
   return (
-    <div style={{ marginTop: "3.25rem", paddingTop: "4rem", paddingBottom: "5rem" }}>
+    <div style={{ marginTop: "3.5rem", paddingTop: "4.5rem", paddingBottom: "5.5rem" }}>
       <div className="wrap">
-        <div ref={titleRef} className="page-section" style={{ marginBottom: "3rem" }}>
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.7rem",
-              color: "var(--color-accent)",
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              marginBottom: "0.75rem",
-            }}
-          >
+        <div ref={titleRef} className="page-section" style={{ marginBottom: "3.5rem" }}>
+          <p className="label-tag" style={{ marginBottom: "0.875rem" }}>
             {t.about.title}
           </p>
           <h1
             style={{
-              fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
-              fontWeight: 600,
-              letterSpacing: "-0.03em",
+              fontSize: "clamp(2rem, 5vw, 3rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.04em",
               color: "var(--color-text)",
+              lineHeight: 1.1,
             }}
           >
             Kristyan Carvalho
@@ -140,34 +121,32 @@ export function AboutPage({ t }: AboutPageProps) {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
             gap: "1.25rem",
-            marginBottom: "3.5rem",
+            marginBottom: "4rem",
           }}
         >
           <div
             ref={bioRef}
-            className="page-section card-glow"
-            style={{
-              border: "1px solid var(--color-border)",
-              borderRadius: "var(--radius-xl)",
-              padding: "1.5rem",
-              backgroundColor: "var(--color-surface)",
-            }}
+            className="page-section card-surface"
+            style={{ padding: "1.75rem", position: "relative", overflow: "hidden" }}
           >
-            <p
+            <div
+              aria-hidden="true"
               style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.7rem",
-                color: "var(--color-accent)",
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                marginBottom: "0.75rem",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "120px",
+                height: "120px",
+                borderRadius: "50%",
+                background: "radial-gradient(circle, var(--color-accent-dim) 0%, transparent 70%)",
+                filter: "blur(30px)",
+                pointerEvents: "none",
               }}
-            >
-              bio
-            </p>
-            <p style={{ fontSize: "0.875rem", color: "var(--color-muted)", lineHeight: 1.75 }}>
+            />
+            <p className="label-tag" style={{ marginBottom: "1rem" }}>bio</p>
+            <p style={{ fontSize: "0.875rem", color: "var(--color-muted)", lineHeight: 1.8 }}>
               {t.about.bio}
             </p>
           </div>
@@ -175,78 +154,35 @@ export function AboutPage({ t }: AboutPageProps) {
           <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
             <div
               ref={journeyRef}
-              className="page-section card-glow"
-              style={{
-                border: "1px solid var(--color-border)",
-                borderRadius: "var(--radius-xl)",
-                padding: "1.5rem",
-                backgroundColor: "var(--color-surface)",
-              }}
+              className="page-section card-surface"
+              style={{ padding: "1.75rem" }}
             >
-              <p
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.7rem",
-                  color: "var(--color-accent)",
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  marginBottom: "0.75rem",
-                }}
-              >
-                {t.about.journey}
-              </p>
-              <p style={{ fontSize: "0.875rem", color: "var(--color-muted)", lineHeight: 1.7 }}>
+              <p className="label-tag" style={{ marginBottom: "1rem" }}>{t.about.journey}</p>
+              <p style={{ fontSize: "0.875rem", color: "var(--color-muted)", lineHeight: 1.75 }}>
                 {t.about.journeyText}
               </p>
             </div>
 
             <div
               ref={interestsRef}
-              className="page-section card-glow"
-              style={{
-                border: "1px solid var(--color-border)",
-                borderRadius: "var(--radius-xl)",
-                padding: "1.5rem",
-                backgroundColor: "var(--color-surface)",
-              }}
+              className="page-section card-surface"
+              style={{ padding: "1.75rem" }}
             >
-              <p
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.7rem",
-                  color: "var(--color-accent)",
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  marginBottom: "0.75rem",
-                }}
-              >
-                {t.about.interests}
-              </p>
-              <p style={{ fontSize: "0.875rem", color: "var(--color-muted)", lineHeight: 1.7 }}>
+              <p className="label-tag" style={{ marginBottom: "1rem" }}>{t.about.interests}</p>
+              <p style={{ fontSize: "0.875rem", color: "var(--color-muted)", lineHeight: 1.75 }}>
                 {t.about.interestsText}
               </p>
             </div>
           </div>
         </div>
 
-        <div ref={techTitleRef} className="page-section" style={{ marginBottom: "1.5rem" }}>
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.7rem",
-              color: "var(--color-accent)",
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              marginBottom: "0.5rem",
-            }}
-          >
-            {t.about.techTitle}
-          </p>
+        <div ref={techTitleRef} className="page-section" style={{ marginBottom: "1.75rem" }}>
+          <p className="label-tag" style={{ marginBottom: "0.6rem" }}>{t.about.techTitle}</p>
           <h2
             style={{
-              fontSize: "1.25rem",
-              fontWeight: 600,
-              letterSpacing: "-0.025em",
+              fontSize: "1.5rem",
+              fontWeight: 700,
+              letterSpacing: "-0.04em",
               color: "var(--color-text)",
             }}
           >
@@ -257,8 +193,8 @@ export function AboutPage({ t }: AboutPageProps) {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-            gap: "1rem",
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+            gap: "1.125rem",
           }}
         >
           <TechCard
@@ -271,7 +207,7 @@ export function AboutPage({ t }: AboutPageProps) {
           />
           <TechCard
             title={t.about.backend}
-            color="var(--color-accent2-dim)"
+            accentColor="var(--color-secondary-dim)"
             rows={[
               { key: "lang", value: technologies.backend.languages },
               { key: "libs", value: technologies.backend.frameworks },

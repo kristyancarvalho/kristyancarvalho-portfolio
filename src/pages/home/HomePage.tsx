@@ -15,53 +15,54 @@ function GlowOrb({ style }: { style: React.CSSProperties }) {
       style={{
         position: "absolute",
         borderRadius: "50%",
-        background: "radial-gradient(circle, var(--color-accent-glow) 0%, transparent 70%)",
-        filter: "blur(48px)",
         pointerEvents: "none",
+        willChange: "transform",
         ...style,
       }}
     />
   );
 }
 
-function StatCard({
-  value,
-  label,
-  delay,
-}: {
-  value: string;
-  label: string;
-  delay: string;
-}) {
+function StatCard({ value, label, delay }: { value: string; label: string; delay: string }) {
   return (
     <div
-      className="animate-fade-up card-glow"
+      className="animate-fade-up card-surface"
       style={{
         animationDelay: delay,
-        padding: "1rem 1.25rem",
-        border: "1px solid var(--color-border)",
-        borderRadius: "var(--radius-lg)",
-        backgroundColor: "var(--color-surface)",
-        minWidth: "7rem",
+        padding: "1.25rem 1.5rem",
+        minWidth: "8rem",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(135deg, var(--color-accent-dim) 0%, transparent 60%)",
+          pointerEvents: "none",
+        }}
+      />
       <p
         style={{
-          fontSize: "1.5rem",
-          fontWeight: 700,
+          fontSize: "1.875rem",
+          fontWeight: 800,
           color: "var(--color-text)",
-          lineHeight: 1.1,
-          letterSpacing: "-0.03em",
+          lineHeight: 1,
+          letterSpacing: "-0.04em",
+          fontVariantNumeric: "tabular-nums",
         }}
       >
         {value}
       </p>
       <p
         style={{
-          fontSize: "0.7rem",
+          fontSize: "0.68rem",
           color: "var(--color-muted)",
-          marginTop: "0.25rem",
+          marginTop: "0.375rem",
           fontFamily: "var(--font-mono)",
+          letterSpacing: "0.04em",
         }}
       >
         {label}
@@ -78,7 +79,7 @@ function SocialRow() {
     { label: "whatsapp", href: whatsapp },
   ];
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
       {items.map(({ label, href }) => (
         <a
           key={label}
@@ -87,9 +88,10 @@ function SocialRow() {
           rel="noopener noreferrer"
           style={{
             fontFamily: "var(--font-mono)",
-            fontSize: "0.72rem",
+            fontSize: "0.7rem",
             color: "var(--color-muted)",
             textDecoration: "none",
+            letterSpacing: "0.03em",
             transition: "color 0.15s ease",
           }}
           onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-accent)")}
@@ -110,8 +112,8 @@ export function HomePage({ t }: HomePageProps) {
   return (
     <div
       style={{
-        minHeight: "calc(100svh - 3.25rem)",
-        marginTop: "3.25rem",
+        minHeight: "calc(100svh - 3.5rem)",
+        marginTop: "3.5rem",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -120,40 +122,50 @@ export function HomePage({ t }: HomePageProps) {
       }}
     >
       <GlowOrb
-        style={{ width: "560px", height: "560px", top: "-140px", right: "-120px", opacity: 0.35 }}
+        style={{
+          width: "600px",
+          height: "600px",
+          top: "-200px",
+          right: "-150px",
+          background: "radial-gradient(circle, var(--color-accent-glow) 0%, transparent 65%)",
+          filter: "blur(40px)",
+          opacity: 0.5,
+        }}
       />
       <GlowOrb
         style={{
-          width: "320px",
-          height: "320px",
-          bottom: "8%",
-          left: "-100px",
-          opacity: 0.18,
-          background: "radial-gradient(circle, var(--color-accent2-glow) 0%, transparent 70%)",
+          width: "400px",
+          height: "400px",
+          bottom: "0",
+          left: "-150px",
+          background: "radial-gradient(circle, var(--color-secondary-glow) 0%, transparent 65%)",
+          filter: "blur(50px)",
+          opacity: 0.3,
         }}
       />
 
-      <div className="wrap grid-bg" style={{ paddingTop: "5rem", paddingBottom: "5rem" }}>
-        <div style={{ maxWidth: "42rem", position: "relative" }}>
-          <div className="animate-fade-up" style={{ marginBottom: "1.25rem" }}>
+      <div className="wrap grid-dots" style={{ paddingTop: "5rem", paddingBottom: "5rem" }}>
+        <div style={{ maxWidth: "44rem", position: "relative" }}>
+          <div className="animate-fade-up" style={{ marginBottom: "1.5rem" }}>
             <div
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.5rem",
-                padding: "0.3rem 0.75rem",
+                gap: "0.625rem",
+                padding: "0.35rem 1rem 0.35rem 0.625rem",
                 border: "1px solid var(--color-border)",
                 borderRadius: "var(--radius-full)",
-                backgroundColor: "var(--color-surface)",
+                backgroundColor: "color-mix(in oklch, var(--color-surface) 80%, transparent)",
+                backdropFilter: "blur(8px)",
               }}
             >
               <span className="glow-dot" />
               <span
                 style={{
                   fontFamily: "var(--font-mono)",
-                  fontSize: "0.7rem",
+                  fontSize: "0.68rem",
                   color: "var(--color-muted)",
-                  letterSpacing: "0.02em",
+                  letterSpacing: "0.04em",
                 }}
               >
                 {t.home.greeting}
@@ -164,46 +176,47 @@ export function HomePage({ t }: HomePageProps) {
           <h1
             className="animate-fade-up delay-1"
             style={{
-              fontSize: "clamp(2.5rem, 7vw, 4.25rem)",
-              fontWeight: 600,
-              lineHeight: 1.08,
-              letterSpacing: "-0.04em",
+              fontSize: "clamp(2.75rem, 8vw, 5rem)",
+              fontWeight: 800,
+              lineHeight: 1.04,
+              letterSpacing: "-0.05em",
               color: "var(--color-text)",
-              marginBottom: "1.5rem",
+              marginBottom: "1.75rem",
             }}
           >
             {t.home.role.replace(".", "")}
             <span
               style={{
                 display: "inline-block",
-                width: "0.12em",
-                height: "0.9em",
-                backgroundColor: "var(--color-accent)",
-                marginLeft: "0.1em",
+                width: "0.1em",
+                height: "0.85em",
+                background: "linear-gradient(180deg, var(--color-accent), oklch(0.65 0.24 300))",
+                marginLeft: "0.12em",
                 verticalAlign: "text-bottom",
-                borderRadius: "1px",
-                boxShadow: "0 0 16px var(--color-accent-glow)",
-                animation: "glowPulse 1.2s ease-in-out infinite",
+                borderRadius: "2px",
+                boxShadow: "0 0 20px var(--color-accent-glow)",
+                animation: "glowPulse 1.4s ease-in-out infinite",
               }}
               aria-hidden="true"
             />
           </h1>
 
-          <div ref={bioRef} className="page-section" style={{ marginBottom: "2.5rem" }}>
+          <div ref={bioRef} className="page-section" style={{ marginBottom: "2.75rem" }}>
             <p
               style={{
-                fontSize: "0.95rem",
+                fontSize: "1rem",
                 color: "var(--color-muted)",
-                lineHeight: 1.7,
-                maxWidth: "34rem",
+                lineHeight: 1.75,
+                maxWidth: "36rem",
+                fontWeight: 400,
               }}
             >
               {t.home.bio}
             </p>
           </div>
 
-          <div ref={ctaRef} className="page-section" style={{ marginBottom: "3rem" }}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginBottom: "2rem" }}>
+          <div ref={ctaRef} className="page-section" style={{ marginBottom: "3.5rem" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.875rem", marginBottom: "2.25rem" }}>
               <a href={profile.cvUrl} download>
                 <Button variant="glow" size="md">{t.home.downloadCv}</Button>
               </a>
@@ -217,11 +230,11 @@ export function HomePage({ t }: HomePageProps) {
           <div
             ref={statsRef}
             className="page-section"
-            style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}
+            style={{ display: "flex", flexWrap: "wrap", gap: "0.875rem" }}
           >
             <StatCard value={t.home.stat1Value} label={t.home.stat1Label} delay="0s" />
-            <StatCard value={t.home.stat2Value} label={t.home.stat2Label} delay="0.06s" />
-            <StatCard value={t.home.stat3Value} label={t.home.stat3Label} delay="0.12s" />
+            <StatCard value={t.home.stat2Value} label={t.home.stat2Label} delay="0.07s" />
+            <StatCard value={t.home.stat3Value} label={t.home.stat3Label} delay="0.14s" />
           </div>
         </div>
       </div>

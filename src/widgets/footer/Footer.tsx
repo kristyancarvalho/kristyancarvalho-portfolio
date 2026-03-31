@@ -15,44 +15,66 @@ export function Footer({ t }: FooterProps) {
   ];
 
   return (
-    <footer style={{ borderTop: "1px solid var(--color-border)" }}>
+    <footer
+      style={{
+        borderTop: "1px solid var(--color-border)",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "60%",
+          height: "1px",
+          background: "linear-gradient(90deg, transparent, var(--color-accent-dim), transparent)",
+          pointerEvents: "none",
+        }}
+      />
       <div
         className="wrap"
         style={{
-          paddingTop: "2.5rem",
-          paddingBottom: "2.5rem",
+          paddingTop: "3rem",
+          paddingBottom: "3rem",
           display: "grid",
           gridTemplateColumns: "1fr",
-          gap: "2rem",
+          gap: "2.5rem",
         }}
       >
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-            gap: "2rem",
+            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+            gap: "2.5rem",
           }}
         >
           <div>
             <span
               style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.8rem",
-                fontWeight: 500,
+                fontFamily: "var(--font-sans)",
+                fontSize: "0.9rem",
+                fontWeight: 700,
                 color: "var(--color-text)",
-                letterSpacing: "-0.01em",
+                letterSpacing: "-0.03em",
+                display: "block",
+                marginBottom: "0.875rem",
               }}
             >
               kristyan
-              <span style={{ color: "var(--color-accent)" }}>.dev</span>
+              <span style={{ color: "var(--color-accent)", textShadow: "0 0 12px var(--color-accent-glow)" }}>
+                .dev
+              </span>
             </span>
             <p
               style={{
-                marginTop: "0.75rem",
                 fontFamily: "var(--font-mono)",
-                fontSize: "0.7rem",
+                fontSize: "0.68rem",
                 color: "var(--color-muted)",
-                lineHeight: 1.7,
+                lineHeight: 1.8,
                 maxWidth: "18rem",
               }}
             >
@@ -64,23 +86,16 @@ export function Footer({ t }: FooterProps) {
             <p
               style={{
                 fontFamily: "var(--font-mono)",
-                fontSize: "0.65rem",
-                color: "var(--color-muted)",
-                letterSpacing: "0.06em",
+                fontSize: "0.62rem",
+                color: "var(--color-accent)",
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                marginBottom: "0.875rem",
+                marginBottom: "1rem",
               }}
             >
               {t.footer.usefulLinks}
             </p>
-            <ul
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.5rem",
-                listStyle: "none",
-              }}
-            >
+            <ul style={{ display: "flex", flexDirection: "column", gap: "0.6rem", listStyle: "none" }}>
               {links.map(({ label, to }) => (
                 <li key={to}>
                   <NavLink
@@ -106,16 +121,16 @@ export function Footer({ t }: FooterProps) {
             <p
               style={{
                 fontFamily: "var(--font-mono)",
-                fontSize: "0.65rem",
-                color: "var(--color-muted)",
-                letterSpacing: "0.06em",
+                fontSize: "0.62rem",
+                color: "var(--color-accent)",
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                marginBottom: "0.875rem",
+                marginBottom: "1rem",
               }}
             >
               {t.footer.contact}
             </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               {[
                 { label: "github", href: profile.github },
                 { label: "instagram", href: profile.instagram },
@@ -145,14 +160,11 @@ export function Footer({ t }: FooterProps) {
       </div>
 
       <div style={{ borderTop: "1px solid var(--color-border)" }}>
-        <div
-          className="wrap"
-          style={{ paddingTop: "1rem", paddingBottom: "1rem" }}
-        >
+        <div className="wrap" style={{ paddingTop: "1.125rem", paddingBottom: "1.125rem" }}>
           <p
             style={{
               fontFamily: "var(--font-mono)",
-              fontSize: "0.65rem",
+              fontSize: "0.62rem",
               color: "var(--color-muted)",
             }}
           >
