@@ -170,7 +170,7 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
                     left: tabRect.left,
                     width: tabRect.width,
                     borderRadius: "var(--radius-full)",
-                    background: "linear-gradient(135deg, var(--color-primary) 0%, oklch(0.65 0.24 300) 100%)",
+                    background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
                     boxShadow: "0 0 16px var(--color-primary-glow)",
                     transition: "left 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.28s cubic-bezier(0.34, 1.56, 0.64, 1)",
                     pointerEvents: "none",

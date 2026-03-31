@@ -28,13 +28,13 @@ const sizeStyle: Record<string, React.CSSProperties> = {
 
 const variantStyle: Record<string, React.CSSProperties> = {
   primary: {
-    background: "linear-gradient(135deg, var(--color-primary) 0%, oklch(0.65 0.24 300) 100%)",
+    background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
     color: "white",
     border: "1px solid transparent",
     boxShadow: "0 0 20px var(--color-primary-dim), inset 0 1px 0 oklch(1 0 0 / 0.15)",
   },
   glow: {
-    background: "linear-gradient(135deg, var(--color-primary) 0%, oklch(0.65 0.24 300) 100%)",
+    background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
     color: "white",
     border: "1px solid transparent",
     boxShadow: "0 0 30px var(--color-primary-glow), 0 0 60px var(--color-primary-dim), inset 0 1px 0 oklch(1 0 0 / 0.15)",

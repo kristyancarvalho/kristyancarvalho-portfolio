@@ -212,20 +212,6 @@ export function HomePage({ t }: HomePageProps) {
             }}
           >
             {t.home.role.replace(".", "")}
-            <span
-              style={{
-                display: "inline-block",
-                width: "0.1em",
-                height: "0.85em",
-                background: "linear-gradient(180deg, var(--color-accent), oklch(0.65 0.24 300))",
-                marginLeft: "0.12em",
-                verticalAlign: "text-bottom",
-                borderRadius: "2px",
-                boxShadow: "0 0 20px var(--color-accent-glow)",
-                animation: "glowPulse 1.4s ease-in-out infinite",
-              }}
-              aria-hidden="true"
-            />
           </h1>
 
           <div
