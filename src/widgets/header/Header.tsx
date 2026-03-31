@@ -313,7 +313,7 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
                     transition: "background-color 0.15s ease, color 0.15s ease",
                     color: isActive ? "white" : "var(--color-muted)",
                     background: isActive
-                      ? "linear-gradient(135deg, var(--color-primary) 0%, oklch(0.65 0.24 300) 100%)"
+                      ? "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)"
                       : "transparent",
                     fontWeight: isActive ? 600 : 400,
                   }}

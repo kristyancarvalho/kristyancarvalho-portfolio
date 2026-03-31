@@ -73,11 +73,12 @@ function StatCard({ value, label, delay }: { value: string; label: string; delay
 }
 
 function SocialRow({ isMobile }: { isMobile: boolean }) {
-  const { github, instagram, whatsapp } = profile;
+  const { github, instagram, whatsapp, linkedin } = profile;
   const items = [
     { label: "github", href: github },
     { label: "instagram", href: instagram },
     { label: "whatsapp", href: whatsapp },
+    { label: "linkedin", href: linkedin },
   ];
   return (
     <div
