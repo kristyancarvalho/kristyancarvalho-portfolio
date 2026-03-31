@@ -24,6 +24,7 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
   const [open, setOpen] = useState(false);
   const [tabRect, setTabRect] = useState<TabRect | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const linkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
 
@@ -43,6 +44,14 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
     if (pathname.startsWith("/posts") || pathname.startsWith("/post/")) return "/posts";
     return "";
   }, [pathname]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   useLayoutEffect(() => {
     const activeKey = getActiveKey();
@@ -82,6 +91,10 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
+
+  useEffect(() => {
+    if (!isMobile) setOpen(false);
+  }, [isMobile]);
 
   return (
     <header style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50 }}>
@@ -131,133 +144,140 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
             </span>
           </NavLink>
 
-          <nav
-            ref={navRef}
-            className="hidden sm:flex items-center"
-            aria-label={t.nav.home}
-            style={{
-              position: "relative",
-              padding: "0.25rem",
-              border: "1px solid var(--color-border)",
-              borderRadius: "var(--radius-full)",
-              background: "color-mix(in oklch, var(--color-surface) 85%, transparent)",
-              backdropFilter: "blur(12px)",
-              gap: "0",
-            }}
-          >
-            {tabRect && (
-              <span
-                aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  top: "0.25rem",
-                  bottom: "0.25rem",
-                  left: tabRect.left,
-                  width: tabRect.width,
-                  borderRadius: "var(--radius-full)",
-                  background: "linear-gradient(135deg, var(--color-primary) 0%, oklch(0.65 0.24 300) 100%)",
-                  boxShadow: "0 0 16px var(--color-primary-glow)",
-                  transition: "left 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.28s cubic-bezier(0.34, 1.56, 0.64, 1)",
-                  pointerEvents: "none",
-                  zIndex: 0,
-                }}
-              />
-            )}
-            {links.map(({ label, to }) => {
-              const isActive = to === getActiveKey();
-              return (
-                <NavLink
-                  key={to}
-                  to={to}
-                  ref={el => {
-                    if (el) linkRefs.current.set(to, el);
-                    else linkRefs.current.delete(to);
-                  }}
+          {!isMobile && (
+            <nav
+              ref={navRef}
+              aria-label={t.nav.home}
+              style={{
+                position: "relative",
+                padding: "0.25rem",
+                border: "1px solid var(--color-border)",
+                borderRadius: "var(--radius-full)",
+                background: "color-mix(in oklch, var(--color-surface) 85%, transparent)",
+                backdropFilter: "blur(12px)",
+                gap: "0",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              {tabRect && (
+                <span
+                  aria-hidden="true"
                   style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "0.7rem",
-                    padding: "0.4rem 0.9rem",
+                    position: "absolute",
+                    top: "0.25rem",
+                    bottom: "0.25rem",
+                    left: tabRect.left,
+                    width: tabRect.width,
                     borderRadius: "var(--radius-full)",
-                    transition: "color 0.15s ease",
-                    textDecoration: "none",
-                    position: "relative",
-                    zIndex: 1,
-                    color: isActive ? "white" : "var(--color-muted)",
-                    fontWeight: isActive ? 500 : 400,
-                    whiteSpace: "nowrap",
+                    background: "linear-gradient(135deg, var(--color-primary) 0%, oklch(0.65 0.24 300) 100%)",
+                    boxShadow: "0 0 16px var(--color-primary-glow)",
+                    transition: "left 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.28s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                    pointerEvents: "none",
+                    zIndex: 0,
                   }}
-                >
-                  {label}
-                </NavLink>
-              );
-            })}
-          </nav>
+                />
+              )}
+              {links.map(({ label, to }) => {
+                const isActive = to === getActiveKey();
+                return (
+                  <NavLink
+                    key={to}
+                    to={to}
+                    ref={el => {
+                      if (el) linkRefs.current.set(to, el);
+                      else linkRefs.current.delete(to);
+                    }}
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.7rem",
+                      padding: "0.4rem 0.9rem",
+                      borderRadius: "var(--radius-full)",
+                      transition: "color 0.15s ease",
+                      textDecoration: "none",
+                      position: "relative",
+                      zIndex: 1,
+                      color: isActive ? "white" : "var(--color-muted)",
+                      fontWeight: isActive ? 500 : 400,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {label}
+                  </NavLink>
+                );
+              })}
+            </nav>
+          )}
 
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <LanguageSwitch locale={locale} onChange={onChangeLocale} />
             <ThemeSwitch theme={theme} onToggle={onToggleTheme} />
-            <button
-              className="sm:hidden"
-              onClick={() => setOpen(o => !o)}
-              aria-label={open ? "Fechar menu" : "Abrir menu"}
-              aria-expanded={open}
-              style={{
-                width: "2.25rem",
-                height: "2.25rem",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "5px",
-                color: "var(--color-muted)",
-                background: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-                borderRadius: "var(--radius-md)",
-                transition: "border-color 0.15s ease",
-              }}
-            >
-              <span
+            {isMobile && (
+              <button
+                onClick={() => setOpen(o => !o)}
+                aria-label={open ? "Fechar menu" : "Abrir menu"}
+                aria-expanded={open}
                 style={{
-                  display: "block",
-                  width: "15px",
-                  height: "1.5px",
-                  background: "currentColor",
-                  borderRadius: "2px",
-                  transition: "transform 0.2s ease",
-                  transform: open ? "rotate(45deg) translateY(3.5px)" : "none",
+                  width: "2.25rem",
+                  height: "2.25rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "5px",
+                  color: "var(--color-muted)",
+                  background: "var(--color-surface)",
+                  border: "1px solid var(--color-border)",
+                  borderRadius: "var(--radius-md)",
+                  transition: "border-color 0.15s ease",
+                  flexShrink: 0,
+                  overflow: "hidden",
                 }}
-              />
-              <span
-                style={{
-                  display: "block",
-                  width: "15px",
-                  height: "1.5px",
-                  background: "currentColor",
-                  borderRadius: "2px",
-                  transition: "opacity 0.2s ease, transform 0.2s ease",
-                  opacity: open ? 0 : 1,
-                  transform: open ? "scaleX(0)" : "none",
-                }}
-              />
-              <span
-                style={{
-                  display: "block",
-                  width: "15px",
-                  height: "1.5px",
-                  background: "currentColor",
-                  borderRadius: "2px",
-                  transition: "transform 0.2s ease",
-                  transform: open ? "rotate(-45deg) translateY(-3.5px)" : "none",
-                }}
-              />
-            </button>
+              >
+                <span
+                  style={{
+                    display: "block",
+                    width: "15px",
+                    height: "1.5px",
+                    background: "currentColor",
+                    borderRadius: "2px",
+                    transition: "transform 0.2s ease",
+                    transformOrigin: "center",
+                    transform: open ? "rotate(45deg) translate(0px, 6.5px)" : "none",
+                  }}
+                />
+                <span
+                  style={{
+                    display: "block",
+                    width: "15px",
+                    height: "1.5px",
+                    background: "currentColor",
+                    borderRadius: "2px",
+                    transition: "opacity 0.2s ease, transform 0.2s ease",
+                    opacity: open ? 0 : 1,
+                    transform: open ? "scaleX(0)" : "none",
+                  }}
+                />
+                <span
+                  style={{
+                    display: "block",
+                    width: "15px",
+                    height: "1.5px",
+                    background: "currentColor",
+                    borderRadius: "2px",
+                    transition: "transform 0.2s ease",
+                    transformOrigin: "center",
+                    transform: open ? "rotate(-45deg) translate(0px, -6.5px)" : "none",
+                  }}
+                />
+              </button>
+            )}
           </div>
         </div>
       </div>
 
-      {open && (
+      {isMobile && open && (
         <nav
-          className="sm:hidden"
           style={{
             borderBottom: "1px solid var(--color-border)",
             backgroundColor: "color-mix(in oklch, var(--color-bg) 94%, transparent)",

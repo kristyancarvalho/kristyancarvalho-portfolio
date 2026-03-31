@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/shared/ui";
 import { profile } from "@/entities/profile";
@@ -71,7 +72,7 @@ function StatCard({ value, label, delay }: { value: string; label: string; delay
   );
 }
 
-function SocialRow() {
+function SocialRow({ isMobile }: { isMobile: boolean }) {
   const { github, instagram, whatsapp } = profile;
   const items = [
     { label: "github", href: github },
@@ -79,7 +80,14 @@ function SocialRow() {
     { label: "whatsapp", href: whatsapp },
   ];
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "1.5rem",
+        justifyContent: isMobile ? "center" : "flex-start",
+      }}
+    >
       {items.map(({ label, href }) => (
         <a
           key={label}
@@ -108,6 +116,15 @@ export function HomePage({ t }: HomePageProps) {
   const statsRef = useScrollReveal();
   const bioRef = useScrollReveal();
   const ctaRef = useScrollReveal();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   return (
     <div
@@ -145,7 +162,17 @@ export function HomePage({ t }: HomePageProps) {
       />
 
       <div className="wrap grid-dots" style={{ paddingTop: "5rem", paddingBottom: "5rem" }}>
-        <div style={{ maxWidth: "44rem", position: "relative" }}>
+        <div
+          style={{
+            maxWidth: "44rem",
+            position: "relative",
+            margin: isMobile ? "0 auto" : undefined,
+            textAlign: isMobile ? "center" : undefined,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: isMobile ? "center" : "flex-start",
+          }}
+        >
           <div className="animate-fade-up" style={{ marginBottom: "1.5rem" }}>
             <div
               style={{
@@ -176,7 +203,7 @@ export function HomePage({ t }: HomePageProps) {
           <h1
             className="animate-fade-up delay-1"
             style={{
-              fontSize: "clamp(2.75rem, 8vw, 5rem)",
+              fontSize: "clamp(2rem, 8vw, 5rem)",
               fontWeight: 800,
               lineHeight: 1.04,
               letterSpacing: "-0.05em",
@@ -201,10 +228,17 @@ export function HomePage({ t }: HomePageProps) {
             />
           </h1>
 
-          <div ref={bioRef} className="page-section" style={{ marginBottom: "2.75rem" }}>
+          <div
+            ref={bioRef}
+            className="page-section"
+            style={{
+              marginBottom: "2.75rem",
+              width: "100%",
+            }}
+          >
             <p
               style={{
-                fontSize: "1rem",
+                fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
                 color: "var(--color-muted)",
                 lineHeight: 1.75,
                 maxWidth: "36rem",
@@ -215,8 +249,16 @@ export function HomePage({ t }: HomePageProps) {
             </p>
           </div>
 
-          <div ref={ctaRef} className="page-section" style={{ marginBottom: "3.5rem" }}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.875rem", marginBottom: "2.25rem" }}>
+          <div ref={ctaRef} className="page-section" style={{ marginBottom: "3.5rem", width: "100%" }}>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "0.875rem",
+                marginBottom: "2.25rem",
+                justifyContent: isMobile ? "center" : "flex-start",
+              }}
+            >
               <a href={profile.cvUrl} download>
                 <Button variant="glow" size="md">{t.home.downloadCv}</Button>
               </a>
@@ -224,13 +266,19 @@ export function HomePage({ t }: HomePageProps) {
                 <Button variant="outline" size="md">{t.home.viewProjects}</Button>
               </Link>
             </div>
-            <SocialRow />
+            <SocialRow isMobile={isMobile} />
           </div>
 
           <div
             ref={statsRef}
             className="page-section"
-            style={{ display: "flex", flexWrap: "wrap", gap: "0.875rem" }}
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "0.875rem",
+              justifyContent: isMobile ? "center" : "flex-start",
+              width: "100%",
+            }}
           >
             <StatCard value={t.home.stat1Value} label={t.home.stat1Label} delay="0s" />
             <StatCard value={t.home.stat2Value} label={t.home.stat2Label} delay="0.07s" />
