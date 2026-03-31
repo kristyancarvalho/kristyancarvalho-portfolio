@@ -16,7 +16,7 @@ function GlowOrb({ style }: { style: React.CSSProperties }) {
         position: "absolute",
         borderRadius: "50%",
         background: "radial-gradient(circle, var(--color-accent-glow) 0%, transparent 70%)",
-        filter: "blur(40px)",
+        filter: "blur(48px)",
         pointerEvents: "none",
         ...style,
       }}
@@ -24,10 +24,18 @@ function GlowOrb({ style }: { style: React.CSSProperties }) {
   );
 }
 
-function StatCard({ value, label, delay }: { value: string; label: string; delay: string }) {
+function StatCard({
+  value,
+  label,
+  delay,
+}: {
+  value: string;
+  label: string;
+  delay: string;
+}) {
   return (
     <div
-      className="animate-fade-up"
+      className="animate-fade-up card-glow"
       style={{
         animationDelay: delay,
         padding: "1rem 1.25rem",
@@ -40,7 +48,7 @@ function StatCard({ value, label, delay }: { value: string; label: string; delay
       <p
         style={{
           fontSize: "1.5rem",
-          fontWeight: 600,
+          fontWeight: 700,
           color: "var(--color-text)",
           lineHeight: 1.1,
           letterSpacing: "-0.03em",
@@ -112,28 +120,21 @@ export function HomePage({ t }: HomePageProps) {
       }}
     >
       <GlowOrb
-        style={{
-          width: "500px",
-          height: "500px",
-          top: "-120px",
-          right: "-100px",
-          opacity: 0.4,
-        }}
+        style={{ width: "560px", height: "560px", top: "-140px", right: "-120px", opacity: 0.35 }}
       />
       <GlowOrb
         style={{
-          width: "300px",
-          height: "300px",
-          bottom: "10%",
-          left: "-80px",
-          opacity: 0.2,
-          background: "radial-gradient(circle, var(--color-accent2-dim) 0%, transparent 70%)",
+          width: "320px",
+          height: "320px",
+          bottom: "8%",
+          left: "-100px",
+          opacity: 0.18,
+          background: "radial-gradient(circle, var(--color-accent2-glow) 0%, transparent 70%)",
         }}
       />
 
-      <div className="wrap" style={{ paddingTop: "5rem", paddingBottom: "5rem" }}>
+      <div className="wrap grid-bg" style={{ paddingTop: "5rem", paddingBottom: "5rem" }}>
         <div style={{ maxWidth: "42rem", position: "relative" }}>
-
           <div className="animate-fade-up" style={{ marginBottom: "1.25rem" }}>
             <div
               style={{
@@ -142,7 +143,7 @@ export function HomePage({ t }: HomePageProps) {
                 gap: "0.5rem",
                 padding: "0.3rem 0.75rem",
                 border: "1px solid var(--color-border)",
-                borderRadius: "var(--radius-2xl)",
+                borderRadius: "var(--radius-full)",
                 backgroundColor: "var(--color-surface)",
               }}
             >
@@ -165,7 +166,7 @@ export function HomePage({ t }: HomePageProps) {
             style={{
               fontSize: "clamp(2.5rem, 7vw, 4.25rem)",
               fontWeight: 600,
-              lineHeight: 1.1,
+              lineHeight: 1.08,
               letterSpacing: "-0.04em",
               color: "var(--color-text)",
               marginBottom: "1.5rem",
@@ -181,7 +182,7 @@ export function HomePage({ t }: HomePageProps) {
                 marginLeft: "0.1em",
                 verticalAlign: "text-bottom",
                 borderRadius: "1px",
-                boxShadow: "0 0 12px var(--color-accent-glow)",
+                boxShadow: "0 0 16px var(--color-accent-glow)",
                 animation: "glowPulse 1.2s ease-in-out infinite",
               }}
               aria-hidden="true"
@@ -218,9 +219,9 @@ export function HomePage({ t }: HomePageProps) {
             className="page-section"
             style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}
           >
-            <StatCard value="3+" label="years exp." delay="0s" />
-            <StatCard value="15+" label="projects" delay="0.06s" />
-            <StatCard value="full" label="stack" delay="0.12s" />
+            <StatCard value={t.home.stat1Value} label={t.home.stat1Label} delay="0s" />
+            <StatCard value={t.home.stat2Value} label={t.home.stat2Label} delay="0.06s" />
+            <StatCard value={t.home.stat3Value} label={t.home.stat3Label} delay="0.12s" />
           </div>
         </div>
       </div>

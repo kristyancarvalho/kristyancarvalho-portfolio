@@ -36,15 +36,16 @@ export function Header({
     { label: t.nav.home, to: "/" },
     { label: t.nav.about, to: "/sobre" },
     { label: t.nav.projects, to: "/projetos" },
+    { label: t.nav.contact, to: "/contato" },
     { label: t.nav.posts, to: "/posts" },
   ];
 
   const getActiveKey = useCallback((): string => {
-    const isPostActive = pathname.startsWith("/post/");
     if (pathname === "/") return "/";
     if (pathname.startsWith("/sobre")) return "/sobre";
     if (pathname.startsWith("/projetos")) return "/projetos";
-    if (pathname.startsWith("/posts") || isPostActive) return "/posts";
+    if (pathname.startsWith("/contato")) return "/contato";
+    if (pathname.startsWith("/posts") || pathname.startsWith("/post/")) return "/posts";
     return "";
   }, [pathname]);
 
@@ -60,11 +61,8 @@ export function Header({
       }
       const navRect = nav.getBoundingClientRect();
       const elRect = el.getBoundingClientRect();
-      const next = {
-        left: elRect.left - navRect.left,
-        width: elRect.width,
-      };
-      setTabRect(prev => 
+      const next = { left: elRect.left - navRect.left, width: elRect.width };
+      setTabRect(prev =>
         prev?.left === next.left && prev?.width === next.width ? prev : next
       );
     });
@@ -82,21 +80,13 @@ export function Header({
   }, [open]);
 
   return (
-    <header
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-      }}
-    >
+    <header style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50 }}>
       <div
         style={{
           borderBottom: "1px solid var(--color-border)",
-          backgroundColor: "color-mix(in oklch, var(--color-bg) 85%, transparent)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
+          backgroundColor: "color-mix(in oklch, var(--color-bg) 82%, transparent)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
         }}
       >
         <div
@@ -112,18 +102,20 @@ export function Header({
             to="/"
             style={{
               fontFamily: "var(--font-mono)",
-              fontSize: "0.8rem",
-              fontWeight: 500,
+              fontSize: "0.85rem",
+              fontWeight: 600,
               color: "var(--color-text)",
               textDecoration: "none",
-              letterSpacing: "-0.01em",
+              letterSpacing: "-0.02em",
               transition: "color 0.15s ease",
             }}
-            onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-accent)")}
-            onMouseLeave={e => ((e.target as HTMLElement).style.color = "var(--color-text)")}
+            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "var(--color-accent)")}
+            onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "var(--color-text)")}
           >
             kristyan
-            <span style={{ color: "var(--color-accent)" }}>.dev</span>
+            <span style={{ color: "var(--color-accent)", textShadow: "0 0 12px var(--color-accent-glow)" }}>
+              .dev
+            </span>
           </NavLink>
 
           <nav
@@ -150,8 +142,8 @@ export function Header({
                   width: tabRect.width,
                   borderRadius: "calc(var(--radius-lg) - 0.2rem)",
                   backgroundColor: "var(--color-bg)",
-                  border: "1px solid var(--color-border)",
-                  boxShadow: "0 0 12px var(--color-accent-dim), 0 1px 4px rgb(0 0 0 / 0.08)",
+                  border: "1px solid var(--color-accent-dim)",
+                  boxShadow: "0 0 16px var(--color-accent-dim), 0 1px 4px rgb(0 0 0 / 0.08)",
                   transition: "left 0.25s cubic-bezier(0.4, 0, 0.2, 1), width 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
                   pointerEvents: "none",
                   zIndex: 0,
@@ -159,8 +151,7 @@ export function Header({
               />
             )}
             {links.map(({ label, to }) => {
-              const activeKey = getActiveKey();
-              const isActive = to === activeKey;
+              const isActive = to === getActiveKey();
               return (
                 <NavLink
                   key={to}
@@ -251,8 +242,8 @@ export function Header({
           style={{
             borderBottom: "1px solid var(--color-border)",
             backgroundColor: "color-mix(in oklch, var(--color-bg) 95%, transparent)",
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
           }}
           aria-label="Navegação mobile"
         >
@@ -267,8 +258,7 @@ export function Header({
             }}
           >
             {links.map(({ label, to }) => {
-              const activeKey = getActiveKey();
-              const isActive = to === activeKey;
+              const isActive = to === getActiveKey();
               return (
                 <NavLink
                   key={to}
@@ -282,7 +272,7 @@ export function Header({
                     textDecoration: "none",
                     transition: "background-color 0.15s ease, color 0.15s ease",
                     color: isActive ? "var(--color-accent)" : "var(--color-muted)",
-                    backgroundColor: isActive ? "var(--color-surface)" : "transparent",
+                    backgroundColor: isActive ? "var(--color-accent-dim)" : "transparent",
                     fontWeight: isActive ? 500 : 400,
                   }}
                 >
@@ -312,13 +302,13 @@ export function Header({
                   textDecoration: "none",
                   transition: "color 0.15s ease",
                 }}
-                onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-text)")}
+                onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-accent)")}
                 onMouseLeave={e => ((e.target as HTMLElement).style.color = "var(--color-muted)")}
               >
                 github
               </a>
               <a
-                href={profile.instagram}
+                href={profile.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -328,10 +318,10 @@ export function Header({
                   textDecoration: "none",
                   transition: "color 0.15s ease",
                 }}
-                onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-text)")}
+                onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-accent)")}
                 onMouseLeave={e => ((e.target as HTMLElement).style.color = "var(--color-muted)")}
               >
-                instagram
+                linkedin
               </a>
             </div>
           </div>

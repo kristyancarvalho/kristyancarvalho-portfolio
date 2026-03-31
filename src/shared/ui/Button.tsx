@@ -8,33 +8,33 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const sizeStyle: Record<string, React.CSSProperties> = {
   sm: {
     fontSize: "0.72rem",
-    padding: "0.3rem 0.75rem",
-    borderRadius: "var(--radius-md)",
+    padding: "0.35rem 0.875rem",
+    borderRadius: "var(--radius-lg)",
   },
   md: {
-    fontSize: "0.8rem",
-    padding: "0.55rem 1.1rem",
-    borderRadius: "var(--radius-md)",
+    fontSize: "0.82rem",
+    padding: "0.6rem 1.25rem",
+    borderRadius: "var(--radius-lg)",
   },
   lg: {
-    fontSize: "0.875rem",
-    padding: "0.7rem 1.5rem",
-    borderRadius: "var(--radius-lg)",
+    fontSize: "0.9rem",
+    padding: "0.75rem 1.75rem",
+    borderRadius: "var(--radius-xl)",
   },
 };
 
 const variantStyle: Record<string, React.CSSProperties> = {
   primary: {
-    backgroundColor: "var(--color-accent)",
+    backgroundColor: "var(--color-primary)",
     color: "white",
     border: "1px solid transparent",
-    boxShadow: "0 0 16px var(--color-accent-dim)",
+    boxShadow: "0 0 16px var(--color-primary-dim)",
   },
   glow: {
-    backgroundColor: "var(--color-accent)",
+    backgroundColor: "var(--color-primary)",
     color: "white",
     border: "1px solid transparent",
-    boxShadow: "0 0 20px var(--color-accent-glow), 0 0 40px var(--color-accent-dim)",
+    boxShadow: "0 0 24px var(--color-primary-glow), 0 0 48px var(--color-primary-dim)",
   },
   ghost: {
     backgroundColor: "transparent",
@@ -59,7 +59,7 @@ export function Button({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center gap-2 font-medium transition-all duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] disabled:opacity-50 disabled:pointer-events-none",
+        "inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)] disabled:opacity-50 disabled:pointer-events-none",
         className,
       )}
       style={{

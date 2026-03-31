@@ -57,8 +57,8 @@ export function ProjectsPage({ t }: ProjectsPageProps) {
               type="search"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="filter..."
-              aria-label="Filtrar projetos"
+              placeholder={t.projects.filterPlaceholder}
+              aria-label={t.projects.filterAriaLabel}
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: "0.75rem",

@@ -9,8 +9,8 @@ export function NotFoundPage({ t }: NotFoundPageProps) {
   return (
     <div
       style={{
-        minHeight: "calc(100svh - 3.25rem)",
-        marginTop: "3.25rem",
+        minHeight: "calc(100svh - 3.5rem)",
+        marginTop: "3.5rem",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -25,56 +25,83 @@ export function NotFoundPage({ t }: NotFoundPageProps) {
         aria-hidden="true"
         style={{
           position: "absolute",
-          width: "400px",
-          height: "400px",
+          width: "500px",
+          height: "500px",
           borderRadius: "50%",
-          background: "radial-gradient(circle, var(--color-accent-glow) 0%, transparent 70%)",
-          filter: "blur(60px)",
-          opacity: 0.3,
+          background: "radial-gradient(circle, var(--color-primary-glow) 0%, transparent 70%)",
+          filter: "blur(80px)",
+          opacity: 0.25,
           pointerEvents: "none",
         }}
       />
-      <p
-        className="animate-fade-up"
+      <div
+        aria-hidden="true"
         style={{
-          fontSize: "6rem",
-          fontWeight: 700,
-          letterSpacing: "-0.06em",
-          color: "var(--color-accent)",
-          lineHeight: 1,
-          textShadow: "0 0 40px var(--color-accent-glow)",
-          marginBottom: "1rem",
+          position: "absolute",
+          width: "300px",
+          height: "300px",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, var(--color-cyan-glow) 0%, transparent 70%)",
+          filter: "blur(60px)",
+          opacity: 0.15,
+          bottom: "10%",
+          left: "10%",
+          pointerEvents: "none",
         }}
-      >
-        {t.notFound.code}
+      />
+
+      <p className="label animate-fade-up" style={{ marginBottom: "1.25rem" }}>
+        {t.notFound.label}
       </p>
+
       <p
         className="animate-fade-up delay-1"
+        style={{
+          fontSize: "clamp(5rem, 18vw, 10rem)",
+          fontWeight: 800,
+          letterSpacing: "-0.06em",
+          lineHeight: 1,
+          marginBottom: "1.25rem",
+        }}
+      >
+        <span className="gradient-text">{t.notFound.code}</span>
+      </p>
+
+      <p
+        className="animate-fade-up delay-2"
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: "0.875rem",
           color: "var(--color-muted)",
-          marginBottom: "2rem",
+          marginBottom: "2.5rem",
         }}
       >
         {t.notFound.message}
       </p>
+
       <Link
         to="/"
-        className="animate-fade-up delay-2"
+        className="animate-fade-up delay-3"
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: "0.75rem",
-          color: "var(--color-accent)",
+          color: "white",
           textDecoration: "none",
-          padding: "0.5rem 1.25rem",
-          border: "1px solid var(--color-accent-dim)",
-          borderRadius: "var(--radius-md)",
-          backgroundColor: "var(--color-accent-dim)",
-          transition: "box-shadow 0.15s ease",
+          padding: "0.6rem 1.5rem",
+          border: "1px solid transparent",
+          borderRadius: "var(--radius-full)",
+          backgroundColor: "var(--color-primary)",
+          boxShadow: "0 0 24px var(--color-primary-glow)",
+          transition: "box-shadow 0.2s ease, background-color 0.2s ease",
         }}
-        onMouseEnter={e => ((e.currentTarget as HTMLElement).style.boxShadow = "0 0 16px var(--color-accent-dim)")}
-        onMouseLeave={e => ((e.currentTarget as HTMLElement).style.boxShadow = "none")}
+        onMouseEnter={e => {
+          (e.currentTarget as HTMLElement).style.boxShadow = "0 0 40px var(--color-primary-glow)";
+          (e.currentTarget as HTMLElement).style.backgroundColor = "var(--color-primary-hover)";
+        }}
+        onMouseLeave={e => {
+          (e.currentTarget as HTMLElement).style.boxShadow = "0 0 24px var(--color-primary-glow)";
+          (e.currentTarget as HTMLElement).style.backgroundColor = "var(--color-primary)";
+        }}
       >
         ← {t.notFound.back}
       </Link>

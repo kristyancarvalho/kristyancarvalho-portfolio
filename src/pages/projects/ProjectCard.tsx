@@ -10,6 +10,15 @@ const platformLabels: Record<string, string> = {
   cli: "cli",
 };
 
+type ProjectItemTranslation = { description: string; detailedDescription: string };
+
+function getProjectTranslation(
+  t: Translations,
+  title: string
+): ProjectItemTranslation | undefined {
+  return (t.projects.items as Record<string, ProjectItemTranslation | undefined>)[title];
+}
+
 interface ProjectCardProps {
   project: Project;
   t: Translations;
@@ -18,6 +27,9 @@ interface ProjectCardProps {
 export function ProjectCard({ project, t }: ProjectCardProps) {
   const [open, setOpen] = useState(false);
   const ref = useScrollReveal();
+  const tr = getProjectTranslation(t, project.title);
+  const description = tr?.description ?? project.description;
+  const detailedDescription = tr?.detailedDescription ?? project.detailedDescription;
 
   useEffect(() => {
     if (!open) return;
@@ -42,7 +54,7 @@ export function ProjectCard({ project, t }: ProjectCardProps) {
         role="button"
         tabIndex={0}
         onKeyDown={e => e.key === "Enter" && setOpen(true)}
-        aria-label={`Ver detalhes de ${project.title}`}
+        aria-label={`${t.projects.hint} ${project.title}`}
         style={{
           border: "1px solid var(--color-border)",
           borderRadius: "var(--radius-xl)",
@@ -69,7 +81,7 @@ export function ProjectCard({ project, t }: ProjectCardProps) {
               objectFit: "cover",
               transition: "transform 0.3s ease",
             }}
-            onMouseEnter={e => ((e.target as HTMLElement).style.transform = "scale(1.03)")}
+            onMouseEnter={e => ((e.target as HTMLElement).style.transform = "scale(1.04)")}
             onMouseLeave={e => ((e.target as HTMLElement).style.transform = "scale(1)")}
           />
         </div>
@@ -124,7 +136,7 @@ export function ProjectCard({ project, t }: ProjectCardProps) {
               overflow: "hidden",
             }}
           >
-            {project.description}
+            {description}
           </p>
         </div>
       </article>
@@ -139,9 +151,9 @@ export function ProjectCard({ project, t }: ProjectCardProps) {
             alignItems: "center",
             justifyContent: "center",
             padding: "1rem",
-            backgroundColor: "rgb(0 0 0 / 0.65)",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
+            backgroundColor: "rgb(0 0 0 / 0.7)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
             animation: "fadeIn 0.15s ease forwards",
           }}
           onClick={() => setOpen(false)}
@@ -158,47 +170,58 @@ export function ProjectCard({ project, t }: ProjectCardProps) {
               maxWidth: "36rem",
               maxHeight: "88vh",
               overflowY: "auto",
-              boxShadow: "0 0 40px var(--color-accent-dim), 0 20px 60px rgb(0 0 0 / 0.3)",
-              animation: "fadeUp 0.2s ease forwards",
+              boxShadow: "0 0 60px var(--color-accent-dim), 0 24px 48px rgb(0 0 0 / 0.3)",
             }}
             onClick={e => e.stopPropagation()}
           >
-            <img
-              src={project.imageSrc}
-              alt={project.title}
+            <div
               style={{
-                width: "100%",
                 aspectRatio: "16/9",
-                objectFit: "cover",
+                overflow: "hidden",
                 borderRadius: "var(--radius-2xl) var(--radius-2xl) 0 0",
+                position: "relative",
               }}
-            />
+            >
+              <img
+                src={project.imageSrc}
+                alt={project.title}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "linear-gradient(to top, var(--color-bg) 0%, transparent 50%)",
+                }}
+              />
+            </div>
+
             <div style={{ padding: "1.5rem" }}>
               <div
                 style={{
                   display: "flex",
-                  alignItems: "flex-start",
+                  alignItems: "center",
                   justifyContent: "space-between",
-                  gap: "1rem",
                   marginBottom: "1rem",
                 }}
               >
-                <h2
+                <h3
                   style={{
-                    fontSize: "1.1rem",
+                    fontSize: "1.125rem",
                     fontWeight: 600,
                     color: "var(--color-text)",
                     letterSpacing: "-0.02em",
                   }}
                 >
                   {project.title}
-                </h2>
+                </h3>
                 <button
                   onClick={() => setOpen(false)}
                   aria-label="Fechar"
                   style={{
                     fontFamily: "var(--font-mono)",
-                    fontSize: "0.7rem",
+                    fontSize: "0.65rem",
                     color: "var(--color-muted)",
                     background: "none",
                     border: "1px solid var(--color-border)",
@@ -229,7 +252,7 @@ export function ProjectCard({ project, t }: ProjectCardProps) {
                   marginBottom: "1.5rem",
                 }}
               >
-                {project.detailedDescription}
+                {detailedDescription}
               </p>
 
               <p
@@ -296,7 +319,7 @@ export function ProjectCard({ project, t }: ProjectCardProps) {
                   transition: "background-color 0.15s ease, box-shadow 0.15s ease",
                 }}
                 onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = "0 0 12px var(--color-accent-dim)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 0 16px var(--color-accent-dim)";
                 }}
                 onMouseLeave={e => {
                   (e.currentTarget as HTMLElement).style.boxShadow = "none";

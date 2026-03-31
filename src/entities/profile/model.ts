@@ -3,6 +3,7 @@ export interface Profile {
   role: string;
   github: string;
   instagram: string;
+  linkedin: string;
   whatsapp: string;
   cvUrl: string;
 }

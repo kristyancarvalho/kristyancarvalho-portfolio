@@ -5,6 +5,7 @@ export const profile: Profile = {
   role: "Full-Stack Developer",
   github: "https://github.com/kristyancarvalho",
   instagram: "https://www.instagram.com/kristyancarvalho/",
+  linkedin: "https://www.linkedin.com/in/kristyan-carvalho/",
   whatsapp: "https://wa.link/p3g92v",
   cvUrl: "/KristyanCarvalho.pdf",
 };

@@ -3,6 +3,7 @@ export const ptBR = {
     home: "/inicio",
     about: "/sobre",
     projects: "/projetos",
+    contact: "/contato",
     posts: "/posts",
   },
   home: {
@@ -11,6 +12,12 @@ export const ptBR = {
     bio: "Desenvolvedor fullstack apaixonado por criar soluções web inovadoras e eficientes.",
     downloadCv: "Baixar currículo",
     viewProjects: "Ver projetos",
+    stat1Value: "3+",
+    stat1Label: "anos de exp.",
+    stat2Value: "15+",
+    stat2Label: "projetos",
+    stat3Value: "full",
+    stat3Label: "stack",
   },
   about: {
     title: "/sobre mim",
@@ -29,6 +36,85 @@ export const ptBR = {
     hint: "Clique no card para ver mais sobre o projeto.",
     github: "Ver no Github",
     techUsed: "Tecnologias usadas:",
+    filterPlaceholder: "filtrar...",
+    filterAriaLabel: "Filtrar projetos",
+    items: {
+      Happy: {
+        description: "Mostra localização de orfanatos próximos abertos para visitação.",
+        detailedDescription: "Happy mostra localização de orfanatos próximos abertos para visitação. Leve alegria e esperança para crianças em adoção.",
+      },
+      EcoCash: {
+        description: "Plataforma sustentável que conecta hardware, web e mobile para incentivar a reciclagem.",
+        detailedDescription: "Plataforma digital sustentável que conecta hardware e web para incentivar a reciclagem. Utilizando Arduino, ESP8266 e React, o Ecocash coleta dados de materiais recicláveis e os exibe em tempo real.",
+      },
+      Nearby: {
+        description: "Aplicativo mobile de clube de benefícios com cupons em estabelecimentos próximos.",
+        detailedDescription: "Aplicativo mobile inovador que conecta você a um clube de benefícios exclusivo com cupons e descontos em estabelecimentos próximos.",
+      },
+      "Tux Letter": {
+        description: "Newsletter automatizada com as principais notícias sobre Linux e open source.",
+        detailedDescription: "Sistema de newsletter automatizada que coleta, filtra e envia diariamente as principais notícias sobre Linux e software open source.",
+      },
+      "OpenPilot.nvim": {
+        description: "Agente de código inteligente para o Neovim, inspirado no GitHub Copilot.",
+        detailedDescription: "Agente de código inteligente para o editor Neovim. Suporte a múltiplos modelos de IA, controle de rate limit e configuração personalizada.",
+      },
+      GitPulse: {
+        description: "API que gera badges SVG com o último projeto ativo de um usuário no GitHub.",
+        detailedDescription: "API que gera badges em SVG com o último projeto ativo de um usuário no GitHub, ideal para READMEs e portfólios.",
+      },
+      "Codewhisper CLI": {
+        description: "Agente de código via linha de comando para auxiliar desenvolvedores.",
+        detailedDescription: "Ferramenta de linha de comando que utiliza a API do OpenRouter para fornecer respostas baseadas no contexto de arquivos de código fornecidos.",
+      },
+      "Gerenciador do Blog": {
+        description: "Programa desktop para gerenciar a aba Posts deste site.",
+        detailedDescription: "Programa desktop para gerenciar a aba Posts deste site, construído com Electron e Firebase.",
+      },
+      Paint: {
+        description: "Programa desktop para desenhar em ElectronJS, ReactJS e MaterialUI.",
+        detailedDescription: "App para desenhar desenvolvido em ElectronJS, ReactJS e MaterialUI.",
+      },
+      "Salotti Run": {
+        description: "Jogo runner endless para culminância de 2023.",
+        detailedDescription: "Jogo do gênero runner endless desenvolvido com JavaScript, HTML e CSS para projeto de culminância em 2023.",
+      },
+      LetMeAsk: {
+        description: "Crie salas para responder ou fazer perguntas ao vivo durante uma live.",
+        detailedDescription: "Crie salas interativas para responder ou fazer perguntas ao vivo durante uma live.",
+      },
+      MoveIt: {
+        description: "Temporizador pomodoro gamificado. Desenvolvido em NextJS durante o NLW 4.",
+        detailedDescription: "Temporizador pomodoro gamificado desenvolvido em NextJS e TypeScript durante o NLW 4 da Rocketseat.",
+      },
+      "Plann.er API": {
+        description: "API de planejamento de viagem. NLW Journey 2024.",
+        detailedDescription: "API do Plann.er, aplicação desenvolvida durante o bootcamp NLW Journey da Rocketseat.",
+      },
+      Paralelismo: {
+        description: "Benchmark entre processamento de imagens em single thread e Worker Threads.",
+        detailedDescription: "Benchmark comparativo entre single thread e Worker Threads em Node.js para processamento de imagens.",
+      },
+      "C# Snake": {
+        description: "Jogo da cobrinha que roda no terminal, feito para aprender C#.",
+        detailedDescription: "Jogo da cobrinha que roda no terminal. Projeto didático desenvolvido enquanto aprendia C#.",
+      },
+    },
+  },
+  contact: {
+    label: "/contato",
+    title: "Vamos conversar.",
+    subtitle: "Tem um projeto em mente ou só quer trocar uma ideia? Me manda uma mensagem — responderei em breve.",
+    name: "Nome",
+    email: "E-mail",
+    message: "Mensagem",
+    send: "Enviar mensagem",
+    sending: "Enviando...",
+    successTitle: "Mensagem enviada!",
+    successMessage: "Obrigado pelo contato. Responderei assim que possível.",
+    sendAnother: "Enviar outra mensagem",
+    error: "Algo deu errado. Tente novamente ou entre em contato via redes sociais.",
+    orReach: "Ou me encontre em",
   },
   posts: {
     title: "/posts",
@@ -41,6 +127,7 @@ export const ptBR = {
     views: "Visualizações:",
   },
   notFound: {
+    label: "/erro",
     code: "404",
     message: "Foguete fora de órbita...",
     back: "Retornar para o início",

@@ -8,10 +8,9 @@ interface SkeletonProps {
 export function Skeleton({ className, style }: SkeletonProps) {
   return (
     <div
-      className={cn("animate-pulse", className)}
+      className={cn("skeleton-shimmer", className)}
       style={{
-        backgroundColor: "var(--color-surface)",
-        borderRadius: "var(--radius-sm)",
+        borderRadius: "var(--radius-md)",
         ...style,
       }}
     />
