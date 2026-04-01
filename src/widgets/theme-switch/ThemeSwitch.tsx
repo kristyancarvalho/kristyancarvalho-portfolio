@@ -1,3 +1,4 @@
+import { Sun, Moon } from "lucide-react";
 import type { Theme } from "@/shared/types";
 
 interface ThemeSwitchProps {
@@ -22,7 +23,6 @@ export function ThemeSwitch({ theme, onToggle }: ThemeSwitchProps) {
         color: "var(--color-muted)",
         cursor: "pointer",
         transition: "border-color 0.15s ease, color 0.15s ease",
-        fontSize: "0.95rem",
       }}
       onMouseEnter={e => {
         const el = e.currentTarget;
@@ -35,7 +35,10 @@ export function ThemeSwitch({ theme, onToggle }: ThemeSwitchProps) {
         el.style.color = "var(--color-muted)";
       }}
     >
-      {theme === "dark" ? "☀" : "◑"}
+      {theme === "dark"
+        ? <Sun size={15} strokeWidth={2} />
+        : <Moon size={15} strokeWidth={2} />
+      }
     </button>
   );
 }
