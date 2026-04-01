@@ -124,7 +124,7 @@ export const ptBR = {
     mostViewed: "Mais visto",
     notFound: "Nenhum post encontrado",
     notFoundHint: "Tente pesquisar por outros termos",
-    views: "Visualizações:",
+    views: "Visualizações",
   },
   notFound: {
     label: "/erro",

@@ -126,7 +126,7 @@ export const enUS: Translations = {
     mostViewed: "Most viewed",
     notFound: "No posts found",
     notFoundHint: "Try searching for other terms",
-    views: "Views:",
+    views: "Views",
   },
   notFound: {
     label: "/error",
