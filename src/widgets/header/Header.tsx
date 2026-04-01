@@ -5,6 +5,7 @@ import type { Theme, Locale } from "@/shared/types";
 import type { Translations } from "@/shared/i18n";
 import { useState, useRef, useLayoutEffect, useCallback, useEffect } from "react";
 import { profile } from "@/entities/profile";
+import { Menu, X } from "lucide-react";
 
 interface HeaderProps {
   theme: Theme;
@@ -27,6 +28,11 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
   const [isMobile, setIsMobile] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const linkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
+  const openRef = useRef(open);
+
+  useLayoutEffect(() => {
+    openRef.current = open;
+  });
 
   const links = [
     { label: t.nav.home, to: "/" },
@@ -47,7 +53,11 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 639px)");
-    const update = () => setIsMobile(mq.matches);
+    const update = () => {
+      const mobile = mq.matches;
+      setIsMobile(mobile);
+      if (!mobile && openRef.current) setOpen(false);
+    };
     update();
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
@@ -91,10 +101,6 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
-
-  useEffect(() => {
-    if (!isMobile) setOpen(false);
-  }, [isMobile]);
 
   return (
     <header style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50 }}>
@@ -215,61 +221,26 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
             {isMobile && (
               <button
                 onClick={() => setOpen(o => !o)}
-                aria-label={open ? "Fechar menu" : "Abrir menu"}
+                aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
                 aria-expanded={open}
                 style={{
                   width: "2.25rem",
                   height: "2.25rem",
                   display: "flex",
-                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "5px",
                   color: "var(--color-muted)",
                   background: "var(--color-surface)",
                   border: "1px solid var(--color-border)",
                   borderRadius: "var(--radius-md)",
-                  transition: "border-color 0.15s ease",
+                  transition: "border-color 0.15s ease, color 0.15s ease",
                   flexShrink: 0,
-                  overflow: "hidden",
                 }}
               >
-                <span
-                  style={{
-                    display: "block",
-                    width: "15px",
-                    height: "1.5px",
-                    background: "currentColor",
-                    borderRadius: "2px",
-                    transition: "transform 0.2s ease",
-                    transformOrigin: "center",
-                    transform: open ? "rotate(45deg) translate(0px, 6.5px)" : "none",
-                  }}
-                />
-                <span
-                  style={{
-                    display: "block",
-                    width: "15px",
-                    height: "1.5px",
-                    background: "currentColor",
-                    borderRadius: "2px",
-                    transition: "opacity 0.2s ease, transform 0.2s ease",
-                    opacity: open ? 0 : 1,
-                    transform: open ? "scaleX(0)" : "none",
-                  }}
-                />
-                <span
-                  style={{
-                    display: "block",
-                    width: "15px",
-                    height: "1.5px",
-                    background: "currentColor",
-                    borderRadius: "2px",
-                    transition: "transform 0.2s ease",
-                    transformOrigin: "center",
-                    transform: open ? "rotate(-45deg) translate(0px, -6.5px)" : "none",
-                  }}
-                />
+                {open
+                  ? <X size={16} strokeWidth={2} />
+                  : <Menu size={16} strokeWidth={2} />
+                }
               </button>
             )}
           </div>
