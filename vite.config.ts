@@ -15,11 +15,13 @@ export default defineConfig({
     cssCodeSplit: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ["react", "react-dom"],
-          router: ["react-router-dom"],
-          firebase: ["firebase/app", "firebase/firestore"],
-        },
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            if (id.includes("react-router-dom")) return "router";
+            if (id.includes("react") || id.includes("react-dom")) return "react";
+            if (id.includes("firebase")) return "firebase";
+          }
+        }
       },
     },
   },

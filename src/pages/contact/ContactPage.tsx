@@ -151,13 +151,19 @@ function SocialLink({ href, label }: { href: string; label: string }) {
   );
 }
 
-async function submitToFirestore(data: FormData): Promise<void> {
-  const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
-  const { db } = await import("@/shared/lib");
-  await addDoc(collection(db, "contacts"), {
-    ...data,
-    createdAt: serverTimestamp(),
-  });
+async function sendEmail(data: FormData): Promise<void> {
+  const emailjs = await import("@emailjs/browser");
+  const env = (import.meta as unknown as { env: Record<string, string> }).env;
+  await emailjs.send(
+    env.VITE_EMAILJS_SERVICE_ID as string,
+    env.VITE_EMAILJS_TEMPLATE_ID as string,
+    {
+      from_name: data.name,
+      from_email: data.email,
+      message: data.message,
+    },
+    env.VITE_EMAILJS_PUBLIC_KEY as string
+  );
 }
 
 export function ContactPage({ t }: ContactPageProps) {
@@ -173,7 +179,7 @@ export function ContactPage({ t }: ContactPageProps) {
     if (!form.name || !form.email || !form.message) return;
     setState("sending");
     try {
-      await submitToFirestore(form);
+      await sendEmail(form);
       setState("sent");
       setForm({ name: "", email: "", message: "" });
     } catch {
