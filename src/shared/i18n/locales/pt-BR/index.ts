@@ -5,6 +5,8 @@ export const ptBR = {
     projects: "/projetos",
     contact: "/contato",
     posts: "/posts",
+    openMenu: "Abrir menu",
+    closeMenu: "Fechar menu",
   },
   home: {
     greeting: "Prazer, sou Kristyan!",
@@ -33,11 +35,22 @@ export const ptBR = {
   },
   projects: {
     title: "/projetos",
+    pageTitle: "Projetos",
     hint: "Clique no card para ver mais sobre o projeto.",
     github: "Ver no Github",
     techUsed: "Tecnologias usadas:",
     filterPlaceholder: "filtrar...",
     filterAriaLabel: "Filtrar projetos",
+    close: "Fechar",
+    platformLabel: "plataforma",
+    techLabel: "tech",
+    sortDefault: "padrão",
+    sortAz: "a → z",
+    sortZa: "z → a",
+    clearFilters: "limpar filtros",
+    noResults: "nenhum projeto encontrado",
+    noResultsHint: "tente outros filtros",
+    projectsLabel: "projetos",
     items: {
       Happy: {
         description: "Mostra localização de orfanatos próximos abertos para visitação.",

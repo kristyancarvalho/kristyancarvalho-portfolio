@@ -7,6 +7,8 @@ export const enUS: Translations = {
     projects: "/projects",
     contact: "/contact",
     posts: "/posts",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
   },
   home: {
     greeting: "Nice to meet you, I'm Kristyan!",
@@ -35,11 +37,22 @@ export const enUS: Translations = {
   },
   projects: {
     title: "/projects",
+    pageTitle: "Projects",
     hint: "Click the card to learn more about the project.",
     github: "View on Github",
     techUsed: "Technologies used:",
     filterPlaceholder: "filter...",
     filterAriaLabel: "Filter projects",
+    close: "Close",
+    platformLabel: "platform",
+    techLabel: "tech",
+    sortDefault: "default",
+    sortAz: "a → z",
+    sortZa: "z → a",
+    clearFilters: "clear filters",
+    noResults: "no projects found",
+    noResultsHint: "try other filters",
+    projectsLabel: "projects",
     items: {
       Happy: {
         description: "Shows the location of nearby orphanages open for visitation.",

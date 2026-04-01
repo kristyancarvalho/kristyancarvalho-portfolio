@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import type { Project } from "@/entities/project";
 import type { Translations } from "@/shared/i18n";
 import { useScrollReveal } from "@/shared/hooks";
+import { ArrowRight } from "lucide-react";
 
 const platformLabels: Record<string, string> = {
   web: "web",
@@ -218,7 +219,7 @@ export function ProjectCard({ project, t }: ProjectCardProps) {
                 </h3>
                 <button
                   onClick={() => setOpen(false)}
-                  aria-label="Fechar"
+                  aria-label={t.projects.close}
                   style={{
                     fontFamily: "var(--font-mono)",
                     fontSize: "0.65rem",
@@ -326,7 +327,7 @@ export function ProjectCard({ project, t }: ProjectCardProps) {
                 }}
               >
                 {t.projects.github}
-                <span aria-hidden="true">→</span>
+                <ArrowRight size={13} strokeWidth={2} />
               </a>
             </div>
           </div>
