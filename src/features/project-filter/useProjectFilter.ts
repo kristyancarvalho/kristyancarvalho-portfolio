@@ -64,7 +64,7 @@ export function useProjectFilter(projects: Project[]) {
 
     if (platforms.length > 0) {
       result = result.filter(p =>
-        platforms.every(pl => p.platforms.includes(pl))
+        platforms.every(pl => p.platforms.includes(pl as Project['platforms'][number]))
       );
     }
 
