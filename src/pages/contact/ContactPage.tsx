@@ -153,16 +153,15 @@ function SocialLink({ href, label }: { href: string; label: string }) {
 
 async function sendEmail(data: FormData): Promise<void> {
   const emailjs = await import("@emailjs/browser");
-  const env = (import.meta as unknown as { env: Record<string, string> }).env;
   await emailjs.send(
-    env.VITE_EMAILJS_SERVICE_ID as string,
-    env.VITE_EMAILJS_TEMPLATE_ID as string,
+    import.meta.env.VITE_EMAILJS_SERVICE_ID as string,
+    import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string,
     {
       from_name: data.name,
       from_email: data.email,
       message: data.message,
     },
-    env.VITE_EMAILJS_PUBLIC_KEY as string
+    import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string
   );
 }
 

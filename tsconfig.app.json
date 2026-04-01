@@ -20,6 +20,7 @@
     "noFallthroughCasesInSwitch": true,
     "ignoreDeprecations": "5.0",
     "baseUrl": ".",
+    "types": ["vite/client"],
     "paths": {
       "@/*": ["./src/*"],
     },
