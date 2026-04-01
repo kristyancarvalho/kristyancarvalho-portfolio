@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { Globe, ChevronDown, Check } from "lucide-react";
 import type { Locale } from "@/shared/types";
 
 interface LanguageSwitchProps {
@@ -70,19 +71,18 @@ export function LanguageSwitch({ locale, onChange }: LanguageSwitchProps) {
           el.style.color = "var(--color-muted)";
         }}
       >
-        <span style={{ fontSize: "0.9rem", lineHeight: 1 }}>{current.flag}</span>
+        <Globe size={13} strokeWidth={1.75} />
         <span>{current.label}</span>
-        <span
+        <ChevronDown
+          size={11}
+          strokeWidth={2}
           style={{
-            fontSize: "0.55rem",
             marginLeft: "0.1rem",
             transform: open ? "rotate(180deg)" : "none",
             transition: "transform 0.2s ease",
             opacity: 0.6,
           }}
-        >
-          ▾
-        </span>
+        />
       </button>
 
       {open && (
@@ -147,7 +147,7 @@ export function LanguageSwitch({ locale, onChange }: LanguageSwitchProps) {
                 <span style={{ fontSize: "1rem", lineHeight: 1 }}>{opt.flag}</span>
                 <span>{opt.label}</span>
                 {isSelected && (
-                  <span style={{ marginLeft: "auto", fontSize: "0.6rem", opacity: 0.6 }}>✓</span>
+                  <Check size={11} strokeWidth={2.5} style={{ marginLeft: "auto", opacity: 0.6 }} />
                 )}
               </button>
             );
