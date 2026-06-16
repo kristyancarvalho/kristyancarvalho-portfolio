@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { PageLottie } from "@/shared/ui";
+import notFoundSignalAnimation from "@/shared/assets/lottie/not-found-signal.json";
 import type { Translations } from "@/shared/i18n";
 
 interface NotFoundPageProps {
@@ -62,8 +64,23 @@ export function NotFoundPage({ t }: NotFoundPageProps) {
           letterSpacing: "-0.06em",
           lineHeight: 1,
           marginBottom: "1.25rem",
+          position: "relative",
         }}
       >
+        <PageLottie
+          animationData={notFoundSignalAnimation}
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            width: "clamp(10rem, 32vw, 17rem)",
+            aspectRatio: "1 / 1",
+            transform: "translate(-50%, -50%)",
+            opacity: 0.42,
+            pointerEvents: "none",
+            zIndex: -1,
+          }}
+        />
         <span className="gradient-text">{t.notFound.code}</span>
       </p>
 
