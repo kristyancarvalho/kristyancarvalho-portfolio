@@ -1,4 +1,6 @@
+import { PageLottie } from "@/shared/ui";
 import { useScrollReveal } from "@/shared/hooks";
+import aboutNodesAnimation from "@/shared/assets/lottie/about-nodes.json";
 import type { Translations } from "@/shared/i18n";
 
 const technologies = {
@@ -101,7 +103,28 @@ export function AboutPage({ t }: AboutPageProps) {
   return (
     <div style={{ marginTop: "3.5rem", paddingTop: "4.5rem", paddingBottom: "5.5rem" }}>
       <div className="wrap">
-        <div ref={titleRef} className="page-section" style={{ marginBottom: "3.5rem" }}>
+        <div
+          ref={titleRef}
+          className="page-section"
+          style={{
+            marginBottom: "3.5rem",
+            position: "relative",
+            minHeight: "8rem",
+            paddingRight: "min(34vw, 14rem)",
+          }}
+        >
+          <PageLottie
+            animationData={aboutNodesAnimation}
+            style={{
+              position: "absolute",
+              right: 0,
+              top: "-1.25rem",
+              width: "min(32vw, 13rem)",
+              aspectRatio: "11 / 8",
+              opacity: 0.68,
+              pointerEvents: "none",
+            }}
+          />
           <p className="label-tag" style={{ marginBottom: "0.875rem" }}>
             {t.about.title}
           </p>

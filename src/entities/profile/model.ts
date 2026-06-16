@@ -5,5 +5,6 @@ export interface Profile {
   instagram: string;
   linkedin: string;
   whatsapp: string;
+  blog: string;
   cvUrl: string;
 }

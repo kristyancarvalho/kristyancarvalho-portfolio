@@ -6,8 +6,7 @@ const HomePage = lazy(() => import("@/pages/home").then(m => ({ default: m.HomeP
 const AboutPage = lazy(() => import("@/pages/about").then(m => ({ default: m.AboutPage })));
 const ProjectsPage = lazy(() => import("@/pages/projects").then(m => ({ default: m.ProjectsPage })));
 const ContactPage = lazy(() => import("@/pages/contact").then(m => ({ default: m.ContactPage })));
-const PostsPage = lazy(() => import("@/pages/posts").then(m => ({ default: m.PostsPage })));
-const PostPage = lazy(() => import("@/pages/post").then(m => ({ default: m.PostPage })));
+const ExternalBlogRedirect = lazy(() => import("@/pages/posts").then(m => ({ default: m.ExternalBlogRedirect })));
 const NotFoundPage = lazy(() => import("@/pages/not-found").then(m => ({ default: m.NotFoundPage })));
 
 function PageFallback() {
@@ -55,8 +54,9 @@ export function AppRouter() {
         <Route path="/sobre" element={<AboutPage t={t} />} />
         <Route path="/projetos" element={<ProjectsPage t={t} />} />
         <Route path="/contato" element={<ContactPage t={t} />} />
-        <Route path="/posts" element={<PostsPage t={t} />} />
-        <Route path="/post/:id" element={<PostPage t={t} />} />
+        <Route path="/posts" element={<ExternalBlogRedirect />} />
+        <Route path="/posts/:slug" element={<ExternalBlogRedirect preserveSlug />} />
+        <Route path="/post/:slug" element={<ExternalBlogRedirect preserveSlug />} />
         <Route path="*" element={<NotFoundPage t={t} />} />
       </Routes>
     </Suspense>

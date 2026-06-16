@@ -11,6 +11,19 @@ Currently, two official plugins are available:
 
 The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
+## Local development with Docker
+
+```bash
+docker compose up --build
+```
+
+The app will be available at `http://localhost:5173`. Source files are mounted into the container, so changes on the host trigger Vite hot reload. Run validation commands inside Docker:
+
+```bash
+docker compose run --rm app npm run lint
+docker compose run --rm app npm run build
+```
+
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:

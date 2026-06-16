@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/shared/ui";
+import { Button, PageLottie } from "@/shared/ui";
 import { profile } from "@/entities/profile";
 import { useScrollReveal } from "@/shared/hooks";
+import homeOrbitAnimation from "@/shared/assets/lottie/home-orbit.json";
 import type { Translations } from "@/shared/i18n";
 
 interface HomePageProps {
@@ -163,6 +164,21 @@ export function HomePage({ t }: HomePageProps) {
       />
 
       <div className="wrap grid-dots" style={{ paddingTop: "5rem", paddingBottom: "5rem" }}>
+        {!isMobile && (
+          <PageLottie
+            animationData={homeOrbitAnimation}
+            style={{
+              position: "absolute",
+              right: "max(1.5rem, calc((100vw - 62rem) / 2))",
+              top: "50%",
+              width: "min(24vw, 17rem)",
+              aspectRatio: "1 / 1",
+              transform: "translateY(-52%)",
+              opacity: 0.72,
+              pointerEvents: "none",
+            }}
+          />
+        )}
         <div
           style={{
             maxWidth: "44rem",

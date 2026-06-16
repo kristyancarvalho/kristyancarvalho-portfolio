@@ -11,7 +11,7 @@ export function Footer({ t }: FooterProps) {
     { label: t.nav.home, to: "/" },
     { label: t.nav.about, to: "/sobre" },
     { label: t.nav.projects, to: "/projetos" },
-    { label: t.nav.posts, to: "/posts" },
+    { label: t.nav.posts, href: profile.blog },
   ];
 
   return (
@@ -96,22 +96,39 @@ export function Footer({ t }: FooterProps) {
               {t.footer.usefulLinks}
             </p>
             <ul style={{ display: "flex", flexDirection: "column", gap: "0.6rem", listStyle: "none" }}>
-              {links.map(({ label, to }) => (
-                <li key={to}>
-                  <NavLink
-                    to={to}
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: "0.72rem",
-                      color: "var(--color-muted)",
-                      textDecoration: "none",
-                      transition: "color 0.15s ease",
-                    }}
-                    onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-accent)")}
-                    onMouseLeave={e => ((e.target as HTMLElement).style.color = "var(--color-muted)")}
-                  >
-                    {label}
-                  </NavLink>
+              {links.map(link => (
+                <li key={"href" in link ? link.href : link.to}>
+                  {"href" in link ? (
+                    <a
+                      href={link.href}
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.72rem",
+                        color: "var(--color-muted)",
+                        textDecoration: "none",
+                        transition: "color 0.15s ease",
+                      }}
+                      onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-accent)")}
+                      onMouseLeave={e => ((e.target as HTMLElement).style.color = "var(--color-muted)")}
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <NavLink
+                      to={link.to}
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.72rem",
+                        color: "var(--color-muted)",
+                        textDecoration: "none",
+                        transition: "color 0.15s ease",
+                      }}
+                      onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-accent)")}
+                      onMouseLeave={e => ((e.target as HTMLElement).style.color = "var(--color-muted)")}
+                    >
+                      {link.label}
+                    </NavLink>
+                  )}
                 </li>
               ))}
             </ul>
