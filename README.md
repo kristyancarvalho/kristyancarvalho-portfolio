@@ -13,8 +13,6 @@ The React Compiler is not enabled on this template because of its impact on dev 
 
 ## Local development with Docker
 
-Copy `.env.example` to `.env` and fill in the required values. Then start the Vite development server with Docker Compose:
-
 ```bash
 docker compose up --build
 ```
