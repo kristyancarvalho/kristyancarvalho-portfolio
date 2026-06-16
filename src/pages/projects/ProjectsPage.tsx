@@ -3,6 +3,8 @@ import { useProjectFilter } from "@/features/project-filter";
 import type { SortOption } from "@/features/project-filter";
 import { ProjectCard } from "./ProjectCard";
 import { useScrollReveal } from "@/shared/hooks";
+import { PageLottie } from "@/shared/ui";
+import projectsScanAnimation from "@/shared/assets/lottie/projects-scan.json";
 import type { Translations } from "@/shared/i18n";
 import { Search, CircleOff } from "lucide-react";
 
@@ -91,8 +93,20 @@ export function ProjectsPage({ t }: ProjectsPageProps) {
         <div
           ref={headerRef}
           className="page-section"
-          style={{ marginBottom: "2rem" }}
+          style={{ marginBottom: "2rem", position: "relative" }}
         >
+          <PageLottie
+            animationData={projectsScanAnimation}
+            style={{
+              position: "absolute",
+              top: "-1rem",
+              right: 0,
+              width: "min(28vw, 12rem)",
+              aspectRatio: "3 / 2",
+              opacity: 0.58,
+              pointerEvents: "none",
+            }}
+          />
           <p
             style={{
               fontFamily: "var(--font-mono)",
@@ -112,6 +126,7 @@ export function ProjectsPage({ t }: ProjectsPageProps) {
               letterSpacing: "-0.03em",
               color: "var(--color-text)",
               marginBottom: "1.75rem",
+              paddingRight: "min(30vw, 12rem)",
             }}
           >
             {t.projects.pageTitle}

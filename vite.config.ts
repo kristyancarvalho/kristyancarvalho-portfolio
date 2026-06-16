@@ -17,6 +17,7 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {
+            if (id.includes("lottie")) return "lottie";
             if (id.includes("react-router-dom")) return "router";
             if (id.includes("react") || id.includes("react-dom")) return "react";
             if (id.includes("firebase")) return "firebase";
