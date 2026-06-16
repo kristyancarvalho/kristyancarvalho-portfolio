@@ -131,16 +131,6 @@ export const enUS: Translations = {
     error: "Something went wrong. Try again or reach me through social media.",
     orReach: "Or find me on",
   },
-  posts: {
-    title: "/posts",
-    search: "Search posts...",
-    recent: "Recent",
-    relevant: "Relevant",
-    mostViewed: "Most viewed",
-    notFound: "No posts found",
-    notFoundHint: "Try searching for other terms",
-    views: "Views",
-  },
   notFound: {
     label: "/error",
     code: "404",

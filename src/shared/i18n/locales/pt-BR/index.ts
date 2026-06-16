@@ -129,16 +129,6 @@ export const ptBR = {
     error: "Algo deu errado. Tente novamente ou entre em contato via redes sociais.",
     orReach: "Ou me encontre em",
   },
-  posts: {
-    title: "/posts",
-    search: "Pesquisar posts...",
-    recent: "Recentes",
-    relevant: "Relevantes",
-    mostViewed: "Mais visto",
-    notFound: "Nenhum post encontrado",
-    notFoundHint: "Tente pesquisar por outros termos",
-    views: "Visualizações",
-  },
   notFound: {
     label: "/erro",
     code: "404",

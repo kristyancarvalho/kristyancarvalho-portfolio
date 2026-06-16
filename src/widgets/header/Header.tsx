@@ -39,7 +39,7 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
     { label: t.nav.about, to: "/sobre" },
     { label: t.nav.projects, to: "/projetos" },
     { label: t.nav.contact, to: "/contato" },
-    { label: t.nav.posts, to: "/posts" },
+    { label: t.nav.posts, href: profile.blog },
   ];
 
   const getActiveKey = useCallback((): string => {
@@ -47,7 +47,6 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
     if (pathname.startsWith("/sobre")) return "/sobre";
     if (pathname.startsWith("/projetos")) return "/projetos";
     if (pathname.startsWith("/contato")) return "/contato";
-    if (pathname.startsWith("/posts") || pathname.startsWith("/post/")) return "/posts";
     return "";
   }, [pathname]);
 
@@ -184,15 +183,39 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
                   }}
                 />
               )}
-              {links.map(({ label, to }) => {
-                const isActive = to === getActiveKey();
+              {links.map(link => {
+                if ("href" in link) {
+                  return (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.7rem",
+                        padding: "0.4rem 0.9rem",
+                        borderRadius: "var(--radius-full)",
+                        transition: "color 0.15s ease",
+                        textDecoration: "none",
+                        position: "relative",
+                        zIndex: 1,
+                        color: "var(--color-muted)",
+                        fontWeight: 400,
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {link.label}
+                    </a>
+                  );
+                }
+
+                const isActive = link.to === getActiveKey();
                 return (
                   <NavLink
-                    key={to}
-                    to={to}
+                    key={link.to}
+                    to={link.to}
                     ref={el => {
-                      if (el) linkRefs.current.set(to, el);
-                      else linkRefs.current.delete(to);
+                      if (el) linkRefs.current.set(link.to, el);
+                      else linkRefs.current.delete(link.to);
                     }}
                     style={{
                       fontFamily: "var(--font-mono)",
@@ -208,7 +231,7 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {label}
+                    {link.label}
                   </NavLink>
                 );
               })}
@@ -268,12 +291,35 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
               gap: "0.25rem",
             }}
           >
-            {links.map(({ label, to }) => {
-              const isActive = to === getActiveKey();
+            {links.map(link => {
+              if ("href" in link) {
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.82rem",
+                      padding: "0.7rem 1rem",
+                      borderRadius: "var(--radius-lg)",
+                      textDecoration: "none",
+                      transition: "background-color 0.15s ease, color 0.15s ease",
+                      color: "var(--color-muted)",
+                      background: "transparent",
+                      fontWeight: 400,
+                    }}
+                  >
+                    {link.label}
+                  </a>
+                );
+              }
+
+              const isActive = link.to === getActiveKey();
               return (
                 <NavLink
-                  key={to}
-                  to={to}
+                  key={link.to}
+                  to={link.to}
                   onClick={() => setOpen(false)}
                   style={{
                     fontFamily: "var(--font-mono)",
@@ -289,7 +335,7 @@ export function Header({ theme, onToggleTheme, locale, onChangeLocale, t }: Head
                     fontWeight: isActive ? 600 : 400,
                   }}
                 >
-                  {label}
+                  {link.label}
                 </NavLink>
               );
             })}
