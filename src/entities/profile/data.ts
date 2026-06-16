@@ -7,5 +7,6 @@ export const profile: Profile = {
   instagram: "https://www.instagram.com/kristyancarvalho/",
   linkedin: "https://www.linkedin.com/in/kristyan-carvalho/",
   whatsapp: "https://wa.link/p3g92v",
+  blog: "https://blog.kristyan.dev",
   cvUrl: "/KristyanCarvalho.pdf",
 };
